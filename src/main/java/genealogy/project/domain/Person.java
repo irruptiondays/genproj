@@ -2,13 +2,8 @@ package genealogy.project.domain;
 
 import genealogy.project.common.FamilyBranch;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * Created by TValentine on 12/8/15.
@@ -28,8 +23,12 @@ public class Person {
     private GenLocale birthplace;
     private GenLocale currentOrLateHome;
     private FamilyBranch familyBranch;
+    @OneToOne
+    @JoinColumn(name="personId")
     private FamilyOfOrigin familyOfOrigin;
-    private List<Marriage> marriages = new ArrayList<>(0);
+    @OneToMany(cascade= CascadeType.ALL)
+    @JoinColumn(name="personId")
+    private Set<Marriage> marriages = new HashSet<>(0);
     private Map<String, String> miscData = new HashMap<>(0);
 
     public long getId() {
@@ -128,11 +127,11 @@ public class Person {
         this.familyOfOrigin = familyOfOrigin;
     }
 
-    public List<Marriage> getMarriages() {
+    public Set<Marriage> getMarriages() {
         return marriages;
     }
 
-    public void setMarriages(List<Marriage> marriages) {
+    public void setMarriages(Set<Marriage> marriages) {
         this.marriages = marriages;
     }
 
