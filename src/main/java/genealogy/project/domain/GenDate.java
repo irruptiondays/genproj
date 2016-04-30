@@ -10,7 +10,7 @@ import java.util.Calendar;
 /**
  * Created by TValentine on 12/8/15.
  */
-@Entity
+//@Entity
 public class GenDate {
     @Id
     @GeneratedValue

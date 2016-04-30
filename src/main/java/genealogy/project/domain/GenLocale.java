@@ -7,7 +7,7 @@ import javax.persistence.Id;
 /**
  * Created by TValentine on 12/8/15.
  */
-@Entity
+//@Entity
 public class GenLocale {
     @Id
     @GeneratedValue

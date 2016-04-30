@@ -1,17 +1,16 @@
 package genealogy.project.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by TValentine on 12/8/15.
  */
-@Entity
+//@Entity
 public class FamilyOfOrigin {
     @Id
     @GeneratedValue
     private long id;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "person")
     private Person ego;
     private Person mother;
     private Person father;

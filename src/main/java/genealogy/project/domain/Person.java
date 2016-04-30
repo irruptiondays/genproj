@@ -18,18 +18,32 @@ public class Person {
     private String lastName;
     private String suffix;
     private String maidenName;
-    private GenDate birthdate;
-    private GenDate deathdate;
-    private GenLocale birthplace;
-    private GenLocale currentOrLateHome;
+    private Date birthdate;
+    private Date deathdate;
+    private String birthplace;
+    private String currentOrLateHome;
     private FamilyBranch familyBranch;
-    @OneToOne
-    @JoinColumn(name="personId")
+
+
+    @OneToOne(
+            targetEntity = Person.class,
+            cascade = { CascadeType.REFRESH }
+    )
+    private Person mother;
+
+    @OneToOne(
+            targetEntity = Person.class,
+            cascade = { CascadeType.REFRESH }
+    )
+    private Person father;
+    //private Person father;
+    /*@OneToOne
+    @JoinColumn(name="egoId")
     private FamilyOfOrigin familyOfOrigin;
     @OneToMany(cascade= CascadeType.ALL)
     @JoinColumn(name="personId")
-    private Set<Marriage> marriages = new HashSet<>(0);
-    private Map<String, String> miscData = new HashMap<>(0);
+    private Set<Marriage> marriages = new HashSet<>(0);*/
+    /*private Map<String, String> miscData = new HashMap<>(0);*/
 
     public long getId() {
         return id;
@@ -79,35 +93,35 @@ public class Person {
         this.maidenName = maidenName;
     }
 
-    public GenDate getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(GenDate birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
-    public GenDate getDeathdate() {
+    public Date getDeathdate() {
         return deathdate;
     }
 
-    public void setDeathdate(GenDate deathdate) {
+    public void setDeathdate(Date deathdate) {
         this.deathdate = deathdate;
     }
 
-    public GenLocale getBirthplace() {
+    public String getBirthplace() {
         return birthplace;
     }
 
-    public void setBirthplace(GenLocale birthplace) {
+    public void setBirthplace(String birthplace) {
         this.birthplace = birthplace;
     }
 
-    public GenLocale getCurrentOrLateHome() {
+    public String getCurrentOrLateHome() {
         return currentOrLateHome;
     }
 
-    public void setCurrentOrLateHome(GenLocale currentOrLateHome) {
+    public void setCurrentOrLateHome(String currentOrLateHome) {
         this.currentOrLateHome = currentOrLateHome;
     }
 
@@ -119,27 +133,19 @@ public class Person {
         this.familyBranch = familyBranch;
     }
 
-    public FamilyOfOrigin getFamilyOfOrigin() {
-        return familyOfOrigin;
+    public Person getMother() {
+        return mother;
     }
 
-    public void setFamilyOfOrigin(FamilyOfOrigin familyOfOrigin) {
-        this.familyOfOrigin = familyOfOrigin;
+    public void setMother(Person mother) {
+        this.mother = mother;
     }
 
-    public Set<Marriage> getMarriages() {
-        return marriages;
+    public Person getFather() {
+        return father;
     }
 
-    public void setMarriages(Set<Marriage> marriages) {
-        this.marriages = marriages;
-    }
-
-    public Map<String, String> getMiscData() {
-        return miscData;
-    }
-
-    public void setMiscData(Map<String, String> miscData) {
-        this.miscData = miscData;
+    public void setFather(Person father) {
+        this.father = father;
     }
 }
