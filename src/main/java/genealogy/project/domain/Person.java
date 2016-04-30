@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.*;
 
 /**
- * Created by TValentine on 12/8/15.
+ * A person, or a node in a family tree
  */
 @Entity
 public class Person {
