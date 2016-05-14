@@ -36,8 +36,12 @@ public class PersonDTO {
         this.birthplace = person.getBirthplace();
         this.currentOrLateHome = person.getCurrentOrLateHome();
         this.familyBranch = person.getFamilyBranch();
-        this.motherId = person.getMother().getId();
-        this.fatherId = person.getFather().getId();
+        if (person.getMother() != null) {
+            this.motherId = person.getMother().getId();
+        }
+        if (person.getFather() != null) {
+            this.fatherId = person.getFather().getId();
+        }
     }
 
     public PersonDTO() {}
@@ -144,5 +148,21 @@ public class PersonDTO {
 
     public void setFatherId(long fatherId) {
         this.fatherId = fatherId;
+    }
+
+    public Person toDomain() {
+        Person person = new Person();
+        person.setId(id);
+        person.setFirstName(firstName);
+        person.setMiddleNames(middleNames);
+        person.setLastName(lastName);
+        person.setSuffix(suffix);
+        person.setMaidenName(maidenName);
+        person.setBirthdate(birthdate);
+        person.setDeathdate(deathdate);
+        person.setBirthplace(birthplace);
+        person.setCurrentOrLateHome(currentOrLateHome);
+        person.setFamilyBranch(familyBranch);
+        return person;
     }
 }
