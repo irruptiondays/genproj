@@ -25,6 +25,9 @@ public class PersonDTO {
     private long fatherId;
 
     public PersonDTO(Person person) {
+        if (person == null) {
+            // throw exception
+        }
         this.id = person.getId();
         this.firstName = person.getFirstName();
         this.middleNames = person.getMiddleNames();

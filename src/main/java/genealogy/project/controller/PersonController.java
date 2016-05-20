@@ -28,35 +28,41 @@ public class PersonController {
         return persons;
     }
 
-    @RequestMapping(value = "/person", method = RequestMethod.POST)
+    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    public @ResponseBody PersonDTO getPersonById(@PathVariable Long personId) {
+        Person person = personRepository.findOne(personId);
+        return new PersonDTO(person);
+    }
+
+    @RequestMapping(value = "/person", method = {RequestMethod.POST, RequestMethod.PUT})
     public @ResponseBody PersonDTO createPerson(@RequestBody Person person) {
-        /*Person person = new Person();
-        person.setBirthdate(new Date());
-        person.setBirthplace("Philly");
-        person.setCurrentOrLateHome("Btown");
-        person.setFirstName("Fred");
-        person.setMiddleNames("Bob Joe");
-        person.setLastName("Smith");
-        person.setSuffix("III");*/
         return new PersonDTO(personRepository.save(person));
     }
 
-    @RequestMapping(value = "/person/parent/{parentId}/child/{childId}", method = RequestMethod.PUT)
-    public @ResponseBody PersonDTO setParent(@PathVariable Long parentId, @PathVariable Long childId) {
+    @RequestMapping(value = "/person/parent/{parentId}/child/{childId}/type/{parentType}", method = RequestMethod.PUT)
+    public @ResponseBody PersonDTO setParent(@PathVariable Long parentId,
+                                             @PathVariable Long childId, @PathVariable String parentType) {
         if (GenealogyTools.invalidId(parentId) || GenealogyTools.invalidId(childId)) {
             // throw exception. make one and throw it here.
         }
 
-        Person father = personRepository.findOne(parentId);
+        Person parent = personRepository.findOne(parentId);
         Person child = personRepository.findOne(childId);
 
-        if (father == null || child == null) {
+        if (parent == null || child == null) {
             // throw an exception here.
         }
 
-        child.setFather(father);
-        return new PersonDTO(personRepository.save(child));
+        if ("FATHER".equals(parentType)) {
+            child.setFather(parent);
+        } else if ("MOTHER".equals(parentType)) {
+            child.setMother(parent);
+        } else {
+            // throw exception
+        }
 
+        child.setFather(parent);
+        return new PersonDTO(personRepository.save(child));
     }
 
 }
