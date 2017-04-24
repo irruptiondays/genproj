@@ -1,6 +1,6 @@
-package genealogy.project.dao;
+package org.irruptiondays.genealogy.dao;
 
-import genealogy.project.domain.Person;
+import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 

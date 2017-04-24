@@ -1,4 +1,4 @@
-package genealogy.project.domain;
+package org.irruptiondays.genealogy.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,7 +1,7 @@
-package genealogy.project.dto;
+package org.irruptiondays.genealogy.dto;
 
-import genealogy.project.common.FamilyBranch;
-import genealogy.project.domain.Person;
+import org.irruptiondays.genealogy.common.FamilyBranch;
+import org.irruptiondays.genealogy.domain.Person;
 
 import java.util.Date;
 

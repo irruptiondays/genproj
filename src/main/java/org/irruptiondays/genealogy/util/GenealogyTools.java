@@ -1,4 +1,4 @@
-package genealogy.project.util;
+package org.irruptiondays.genealogy.util;
 
 /**
  * Created by TValentine on 5/14/16.

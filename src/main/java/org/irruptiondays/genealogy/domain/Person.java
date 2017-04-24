@@ -1,6 +1,6 @@
-package genealogy.project.domain;
+package org.irruptiondays.genealogy.domain;
 
-import genealogy.project.common.FamilyBranch;
+import org.irruptiondays.genealogy.common.FamilyBranch;
 
 import javax.persistence.*;
 import java.util.*;

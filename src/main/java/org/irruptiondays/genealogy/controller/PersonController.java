@@ -1,15 +1,14 @@
-package genealogy.project.controller;
+package org.irruptiondays.genealogy.controller;
 
-import genealogy.project.dao.PersonRepository;
-import genealogy.project.domain.Person;
-import genealogy.project.dto.PersonDTO;
-import genealogy.project.util.GenealogyTools;
+import org.irruptiondays.genealogy.dao.PersonRepository;
+import org.irruptiondays.genealogy.domain.Person;
+import org.irruptiondays.genealogy.dto.PersonDTO;
+import org.irruptiondays.genealogy.util.GenealogyTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class PersonController {
         return persons;
     }
 
-    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    @RequestMapping(value = "/person/{personId}", method = RequestMethod.GET)
     public @ResponseBody PersonDTO getPersonById(@PathVariable Long personId) {
         Person person = personRepository.findOne(personId);
         return new PersonDTO(person);
