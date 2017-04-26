@@ -2,7 +2,6 @@ package org.irruptiondays.genealogy.controller;
 
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Person;
-import org.irruptiondays.genealogy.dto.PersonDTO;
 import org.irruptiondays.genealogy.util.GenealogyTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,29 +16,32 @@ import java.util.List;
 @Controller
 public class PersonController {
 
+    private PersonRepository personRepository;
+
     @Autowired
-    public PersonRepository personRepository;
+    public PersonController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @RequestMapping(value = "/person", method = RequestMethod.GET)
-    public @ResponseBody List<PersonDTO> getAllPersons() {
-        List<PersonDTO> persons = new ArrayList<>();
-        personRepository.findAll().forEach(item-> persons.add(new PersonDTO(item)));
+    public @ResponseBody List<Person> getAllPersons() {
+        List<Person> persons = new ArrayList<>();
+        personRepository.findAll().forEach(item-> persons.add(item));
         return persons;
     }
 
     @RequestMapping(value = "/person/{personId}", method = RequestMethod.GET)
-    public @ResponseBody PersonDTO getPersonById(@PathVariable Long personId) {
-        Person person = personRepository.findOne(personId);
-        return new PersonDTO(person);
+    public @ResponseBody Person getPersonById(@PathVariable Long personId) {
+        return personRepository.findOne(personId);
     }
 
     @RequestMapping(value = "/person", method = {RequestMethod.POST, RequestMethod.PUT})
-    public @ResponseBody PersonDTO createPerson(@RequestBody Person person) {
-        return new PersonDTO(personRepository.save(person));
+    public @ResponseBody Person createPerson(@RequestBody Person person) {
+        return personRepository.save(person);
     }
 
     @RequestMapping(value = "/person/parent/{parentId}/child/{childId}/type/{parentType}", method = RequestMethod.PUT)
-    public @ResponseBody PersonDTO setParent(@PathVariable Long parentId,
+    public @ResponseBody Person setParent(@PathVariable Long parentId,
                                              @PathVariable Long childId, @PathVariable String parentType) {
         if (GenealogyTools.invalidId(parentId) || GenealogyTools.invalidId(childId)) {
             // throw exception. make one and throw it here.
@@ -61,7 +63,7 @@ public class PersonController {
         }
 
         child.setFather(parent);
-        return new PersonDTO(personRepository.save(child));
+        return personRepository.save(child);
     }
 
 }
