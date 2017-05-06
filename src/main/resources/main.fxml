@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?package sample?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="377.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Button fx:id="newPersonButton" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" text="Create New Person" />
+    <Label fx:id="newPersonLabel" layoutX="154.0" layoutY="18.0" prefHeight="17.0" prefWidth="319.0" text="Label" />
+
+</BorderPane>
