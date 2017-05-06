@@ -7,6 +7,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  data:
+    rest:
+      base-path: /
 hibernate:
   hbm2ddl:
     auto: create

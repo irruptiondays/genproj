@@ -14,6 +14,7 @@ import java.util.List;
  * Created by TValentine on 5/6/16.
  */
 @Controller
+@RequestMapping(value = {"/person", "/person/" }, method = RequestMethod.GET)
 public class PersonController {
 
     private PersonRepository personRepository;
@@ -23,25 +24,28 @@ public class PersonController {
         this.personRepository = personRepository;
     }
 
-    @RequestMapping(value = "/person", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Person> getAllPersons() {
         List<Person> persons = new ArrayList<>();
-        personRepository.findAll().forEach(item-> persons.add(item));
+        personRepository.findAll().forEach(item -> persons.add(item));
         return persons;
     }
 
-    @RequestMapping(value = "/person/{personId}", method = RequestMethod.GET)
-    public @ResponseBody Person getPersonById(@PathVariable Long personId) {
+    @RequestMapping(value = "/{personId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Person getPersonById(@PathVariable Long personId) {
         return personRepository.findOne(personId);
     }
 
-    @RequestMapping(value = "/person", method = {RequestMethod.POST, RequestMethod.PUT})
-    public @ResponseBody Person createPerson(@RequestBody Person person) {
+    @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.PUT})
+    @ResponseBody
+    public Person createPerson(@RequestBody Person person) {
         return personRepository.save(person);
     }
 
-    @RequestMapping(value = "/person/parent/{parentId}/child/{childId}/type/{parentType}", method = RequestMethod.PUT)
-    public @ResponseBody Person setParent(@PathVariable Long parentId,
+    @RequestMapping(value = "/parent/{parentId}/child/{childId}/type/{parentType}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Person setParent(@PathVariable Long parentId,
                                              @PathVariable Long childId, @PathVariable String parentType) {
         if (GenealogyTools.invalidId(parentId) || GenealogyTools.invalidId(childId)) {
             // throw exception. make one and throw it here.
