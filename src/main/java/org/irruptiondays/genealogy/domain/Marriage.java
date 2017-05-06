@@ -1,26 +1,36 @@
 package org.irruptiondays.genealogy.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by TValentine on 12/8/15.
  */
-//@Entity
+@Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Marriage {
+
+    public Marriage(Person spouse1, Person spouse2, Date date) {
+        this.spouse1 = spouse1;
+        this.spouse2 = spouse2;
+        this.date = date;
+    }
+
     @Id
     @GeneratedValue
     private long id;
-    @OneToOne
-    @JoinColumn(name="marriageId")
+    @ManyToOne
+    @JoinColumn(name = "spouse1")
     private Person spouse1;
-    @OneToOne
-    @JoinColumn(name="spouse1Id")
+    @ManyToOne
+    @JoinColumn(name = "spouse2")
     private Person spouse2;
-    @OneToOne
-    @JoinColumn(name="spouse2Id")
-    private GenDate date;
+    private Date date;
 
 }

@@ -1,6 +1,8 @@
 package org.irruptiondays.genealogy.dao;
 
+import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
+import org.irruptiondays.genealogy.domain.Marriage;
 import org.irruptiondays.genealogy.domain.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +34,7 @@ public class PersonRepositoryTest {
      */
     @Test
     public void testCreateBasicPerson() {
-        Person person = personRepository.save(createPerson("Bobby"));
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
         assertEquals("Eastwood", person.getBirthplace());
         assertEquals("Smith", person.getLastName());
         assertEquals("Bobby", person.getFirstName());
@@ -43,16 +45,13 @@ public class PersonRepositoryTest {
      */
     @Test
     public void testCreatePersonWithParents() {
-        Person person = personRepository.save(createPerson("Bobby"));
-        Person father = personRepository.save(createPerson("Daddy"));
-        Person mother = personRepository.save(createPerson("Mommy"));
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+        Person father = personRepository.save(EntityCreator.createPerson("Daddy"));
+        Person mother = personRepository.save(EntityCreator.createPerson("Mommy"));
         person.setFather(father);
         person.setMother(mother);
 
-        System.out.println("\n\n\n\n\n The mother is " + mother);
-
         person = personRepository.save(person);
-        System.out.println("\n\n\n\n\n The person is now " + person);
 
         assertNotNull(person.getFather());
         assertNotNull(person.getMother());
@@ -60,17 +59,14 @@ public class PersonRepositoryTest {
         assertEquals("Mommy", person.getMother().getFirstName());
     }
 
-//    @Test
-//    public void testMarriage() {
-//
-//    }
+    @Test
+    public void testMarriage() {
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+        Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
 
-    private Person createPerson(String firstName) {
-        return Person.builder().birthdate(new Date())
-                .birthplace("Eastwood")
-                .lastName("Smith")
-                .firstName(firstName)
-                .build();
+        Marriage marriage = new Marriage(person, wife, new Date());
     }
+
+
 
 }

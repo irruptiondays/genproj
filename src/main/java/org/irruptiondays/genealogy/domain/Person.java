@@ -49,8 +49,5 @@ public class Person {
     @JoinColumn(name="egoId")
     private FamilyOfOrigin familyOfOrigin;*/
 
-//    @OneToMany(cascade= CascadeType.ALL)
-//    @JoinColumn(name="personId")
-//    private Set<Marriage> marriages = new HashSet<>(0);
     /*private Map<String, String> miscData = new HashMap<>(0);*/
 }
