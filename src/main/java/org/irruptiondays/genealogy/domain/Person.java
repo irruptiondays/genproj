@@ -44,10 +44,11 @@ public class Person {
             cascade = { CascadeType.REFRESH }
     )
     private Person father;
-    //private Person father;
+
     /*@OneToOne
     @JoinColumn(name="egoId")
     private FamilyOfOrigin familyOfOrigin;*/
 
-    /*private Map<String, String> miscData = new HashMap<>(0);*/
+
+    //private Map<String, String> miscData = new HashMap<>(0);
 }
