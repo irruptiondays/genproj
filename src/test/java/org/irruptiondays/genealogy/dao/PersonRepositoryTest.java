@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -67,6 +68,36 @@ public class PersonRepositoryTest {
         Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
 
         Marriage marriage = new Marriage(person, wife, new Date());
+    }
+
+    @Test
+    public void testGetChildrenOfPerson() {
+        Person father = personRepository.save(EntityCreator.createPerson("Daddy"));
+        Person mother = personRepository.save(EntityCreator.createPerson("Mommy"));
+
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+        person.setFather(father);
+        person.setMother(mother);
+        personRepository.save(person);
+
+        Person person1 = personRepository.save(EntityCreator.createPerson("Dave"));
+        person1.setFather(father);
+        person1.setMother(mother);
+        personRepository.save(person1);
+
+        Person person2 = personRepository.save(EntityCreator.createPerson("Sally"));
+        person2.setFather(father);
+        person2.setMother(mother);
+        personRepository.save(person2);
+
+        // Not child of Daddy/Mommy, should not be counted.
+        Person person3 = personRepository.save(EntityCreator.createPerson("John"));
+        person3.setFather(person1);
+        personRepository.save(person3);
+
+        Set<Person> children = personRepository.getChildrenOfPerson(father);
+
+        assertEquals(3, children.size());
     }
 
 }

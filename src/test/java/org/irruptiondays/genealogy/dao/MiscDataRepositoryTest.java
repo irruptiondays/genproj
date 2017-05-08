@@ -5,6 +5,7 @@ import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
 import org.irruptiondays.genealogy.domain.MiscData;
 import org.irruptiondays.genealogy.domain.Person;
+import org.irruptiondays.genealogy.util.Tools;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by TValentine on 5/7/17.
@@ -49,6 +52,17 @@ public class MiscDataRepositoryTest {
     @Test
     public void testLongDataString() {
         miscDataRepository.save(new MiscData(person, "Did Stuff", new Date(), EntityCreator.reallyLongStringGenerator()));
+    }
+
+    @Test
+    public void testCreateManyEventsAndTheyAreAllThere() {
+        miscDataRepository.save(new MiscData(person, "Did Stuff", new Date(), "Stuff"));
+        miscDataRepository.save(new MiscData(person, "Did Stuff2", new Date(), "Stuff1"));
+        miscDataRepository.save(new MiscData(person, "Did Stuff3", new Date(), "Stuff2"));
+        miscDataRepository.save(new MiscData(person, "Did Stuff4", new Date(), "Stuff3"));
+        miscDataRepository.save(new MiscData(person, "Did Stuff5", new Date(), "Stuff4"));
+        Set<MiscData> miscDataSet = Tools.iterableToSet(miscDataRepository.findAll());
+        assertEquals(5, miscDataSet.size());
     }
 
 

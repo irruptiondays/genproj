@@ -2,7 +2,7 @@ package org.irruptiondays.genealogy.controller;
 
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Person;
-import org.irruptiondays.genealogy.util.GenealogyTools;
+import org.irruptiondays.genealogy.util.Tools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +47,7 @@ public class PersonController {
     @ResponseBody
     public Person setParent(@PathVariable Long parentId,
                                              @PathVariable Long childId, @PathVariable String parentType) {
-        if (GenealogyTools.invalidId(parentId) || GenealogyTools.invalidId(childId)) {
+        if (Tools.invalidId(parentId) || Tools.invalidId(childId)) {
             // throw exception. make one and throw it here.
         }
 
