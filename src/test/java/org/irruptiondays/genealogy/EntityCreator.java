@@ -5,7 +5,7 @@ import org.irruptiondays.genealogy.domain.Person;
 import java.util.Date;
 
 /**
- * Created by TValentine on 5/6/17.
+ * Creates simple pojos and other things. Makes unit test code easier to read.
  */
 public class EntityCreator {
 
@@ -15,5 +15,28 @@ public class EntityCreator {
                 .lastName("Smith")
                 .firstName(firstName)
                 .build();
+    }
+
+    public static String reallyLongStringGenerator() {
+        return "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string " +
+                "Really long string Really long string Really long string ";
     }
 }

@@ -1,8 +1,11 @@
 package org.irruptiondays.genealogy.dao;
 
 import org.irruptiondays.genealogy.domain.MiscData;
+import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Set;
 
 /**
  * Created by TValentine on 5/6/17.
@@ -10,5 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MiscDataRepository extends CrudRepository<MiscData, Long> {
 
-    MiscData findByPersonId(long personId);
+    Set<MiscData> findByPerson(Person person);
 }

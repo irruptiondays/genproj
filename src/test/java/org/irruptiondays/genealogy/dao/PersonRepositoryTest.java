@@ -1,5 +1,6 @@
 package org.irruptiondays.genealogy.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
 import org.irruptiondays.genealogy.domain.Marriage;
@@ -24,6 +25,7 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = GenprojApplication.class)
 @WebAppConfiguration
 @Transactional
+@Slf4j
 public class PersonRepositoryTest {
 
     @Autowired
@@ -66,7 +68,5 @@ public class PersonRepositoryTest {
 
         Marriage marriage = new Marriage(person, wife, new Date());
     }
-
-
 
 }
