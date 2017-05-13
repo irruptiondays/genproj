@@ -2,8 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Framework Guru</title>
+    <title>Test Genproj Index</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/person",
+            data: {
+                lastName: "Smith",
+                firstName: "Jimmy"
+            },
+            success: function(res) {
+                console.log(res);
+                alert(res);
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8080/person/all",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+                alert(res);
+            }
+        });
+    </script>
+
 </head>
 <body>
 <h1>Genealogy Project Generator</h1>
