@@ -65,7 +65,7 @@ public class PersonController {
      * @param person
      * @return
      */
-    @RequestMapping(value = "/", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(value = "", method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
     public Person createPerson(@RequestBody Person person) {
         return personRepository.save(person);

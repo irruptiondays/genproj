@@ -6,10 +6,10 @@ spring:
     driver-class-name: "com.mysql.jdbc.Driver"
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   data:
     rest:
       base-path: /
 hibernate:
   hbm2ddl:
-    auto: create
+    auto: update
