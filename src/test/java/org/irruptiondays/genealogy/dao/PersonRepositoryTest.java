@@ -3,6 +3,7 @@ package org.irruptiondays.genealogy.dao;
 import lombok.extern.slf4j.Slf4j;
 import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
+import org.irruptiondays.genealogy.common.FamilyBranch;
 import org.irruptiondays.genealogy.domain.Marriage;
 import org.irruptiondays.genealogy.domain.Person;
 import org.junit.Test;
@@ -98,6 +99,18 @@ public class PersonRepositoryTest {
         Set<Person> children = personRepository.getChildrenOfPerson(father);
 
         assertEquals(3, children.size());
+    }
+
+    @Test
+    public void testGetPersonByFamilyBranch() {
+        personRepository.save(EntityCreator.createPerson("Bobby"));
+        personRepository.save(EntityCreator.createPerson("Suzy"));
+        personRepository.save(EntityCreator.createPerson("Charlie"));
+        Set<Person> paternalBranchMembers = personRepository.getPersonByFamilyBranch(FamilyBranch.PATERNAL);
+        Set<Person> maternalBranchMembers = personRepository.getPersonByFamilyBranch(FamilyBranch.MATERNAL);
+
+        assertEquals(3, paternalBranchMembers.size());
+        assertEquals(0, maternalBranchMembers.size());
     }
 
 }

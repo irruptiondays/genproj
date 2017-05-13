@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 /**
- * Created by TValentine on 5/6/17.
+ * Repository for CRUD for all misc data.
  */
 @Repository
 public interface MiscDataRepository extends CrudRepository<MiscData, Long> {

@@ -1,5 +1,6 @@
 package org.irruptiondays.genealogy;
 
+import org.irruptiondays.genealogy.common.FamilyBranch;
 import org.irruptiondays.genealogy.domain.Person;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public class EntityCreator {
                 .birthplace("Eastwood")
                 .lastName("Smith")
                 .firstName(firstName)
+                .familyBranch(FamilyBranch.PATERNAL)
                 .build();
     }
 

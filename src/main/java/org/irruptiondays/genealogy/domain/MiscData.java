@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by TValentine on 5/6/17.
+ * Object to store various events or facts about a person.
  */
 @Entity
 @Data

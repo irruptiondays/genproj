@@ -30,6 +30,7 @@ public class Person {
     private Date deathdate;
     private String birthplace;
     private String currentOrLateHome;
+    @Enumerated(EnumType.STRING)
     private FamilyBranch familyBranch;
 
 

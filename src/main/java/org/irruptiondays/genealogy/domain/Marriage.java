@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by TValentine on 12/8/15.
+ * Table of marriages of persons
  */
 @Entity
 @Data
