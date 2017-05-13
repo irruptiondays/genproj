@@ -19,16 +19,14 @@ $(document).ready(function() {
     });
 
     $('#add-person-div-link').click(function(evt) {
-        console.log(evt);
         clearMainContainer();
         $('#add-person-div').removeClass('hidden');
-    })
+    });
 
     $('#get-all-persons-div-link').click(function(evt) {
-        console.log(evt);
         clearMainContainer();
         $('#get-all-persons-div').removeClass('hidden');
-    })
+    });
 
 });
 
@@ -38,13 +36,15 @@ function clearMainContainer() {
     $('#get-all-persons-div').addClass('hidden');
 }
 
-function getAndValidateDate() {
+function getAndValidateDate(dateType) {
 
     // TODO Actually validate the date.
 
-    var year = $('#create-new-person-birth-date-year').val();
-    var month = $('#create-new-person-birth-date-month').val();
-    var day = $('#create-new-person-birth-date-day').val();
+    if (!$('#create-new-person-' + dateType + '-date-known').is(':checked')) return null;
+
+    var year = $('#create-new-person-' + dateType + '-date-year').val();
+    var month = $('#create-new-person-' + dateType + '-date-month').val();
+    var day = $('#create-new-person-' + dateType + '-date-day').val();
 
     var date = new Date(year, month, day);
 
@@ -87,7 +87,6 @@ function getPerson() {
 }
 
 function createPerson() {
-
     var search = {
         firstName: $('#create-new-person-first-name').val(),
         middleNames: $('#create-new-person-middle-names').val(),
@@ -97,7 +96,8 @@ function createPerson() {
         maidenName: $('#create-new-person-maiden-name').val(),
         birthplace: $('#create-new-person-birth-place').val(),
         familyBranch: $('#create-new-person-family-branch').val(),
-        birthdate: getAndValidateDate()
+        birthdate: getAndValidateDate('birth'),
+        deathdate: getAndValidateDate('death')
     };
 
     $('#btn-search').prop('disabled', true);

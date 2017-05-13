@@ -53,7 +53,9 @@
                     <input id="create-new-person-suffix" type="text" name="suffix" /><br />
                     Maiden name:<br />
                     <input id="create-new-person-maiden-name" type="text" name="maiden-name" /><br />
-                    Birthdate (YYYY MM DD):<br />
+                    Birthdate (YYYY MM DD) Known?:
+                    <input id="create-new-person-birth-date-known" type="checkbox" checked="true" value="birthdate-known" />
+                    <br />
                     <input id="create-new-person-birth-date-year" type="text" name="birth-date-year" />
                     <select id="create-new-person-birth-date-month">
                         <option value="0">January</option>
@@ -70,6 +72,29 @@
                         <option value="11">December</option>
                     </select>
                     <input id="create-new-person-birth-date-day" type="text" name="birth-date-day" /><br />
+
+
+                    Died (YYYY MM DD) Known (Uncheck if not deceased)?:
+                    <input id="create-new-person-death-date-known" type="checkbox" checked="true" />
+                    <br />
+                    <input id="create-new-person-death-date-year" type="text" name="death-date-year" />
+                    <select id="create-new-person-death-date-month">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                    <input id="create-new-person-death-date-day" type="text" name="death-date-day" /><br />
+
+
                     Birthplace:<br />
                     <input id="create-new-person-birth-place" type="text" name="birth-place" /><br />
                     Deathdate:<br />
