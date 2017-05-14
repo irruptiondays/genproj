@@ -28,13 +28,19 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" id="bth-search"
-                            class="btn btn-primary btn-lg">Search
+                            class="btn btn-primary btn-lg">Submit
                     </button>
                 </div>
             </div>
         </form>
 
     </div>
+
+    <!--<div id="update-person-div" class="starter-template hidden">-->
+
+        <!--<h2>Update a person</h2>-->
+
+    <!--</div>-->
 
     <div id="add-person-div" class="starter-template hidden">
         <h2>Create a person</h2>
@@ -43,6 +49,13 @@
             <div class="form-group form-group-lg">
                 <label class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-10">
+
+                    Update existing person?
+                    <input id="update-existing-person-checkbox" type="checkbox" /><br /><br />
+                    <div id="update-existing-person-chooser">
+
+                    </div>
+
                     First name:<br />
                     <input id="create-new-person-first-name" type="text" name="first-name" /><br />
                     Middle names:<br />
@@ -111,7 +124,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit"
-                            class="btn btn-primary btn-lg">Search
+                            class="btn btn-primary btn-lg">Submit
                     </button>
                 </div>
             </div>
@@ -124,6 +137,8 @@
 </div>
 
 <script type="text/javascript" src="webjars/jquery/3.2.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="webjars/underscorejs/1.8.3/underscore-min.js"></script>
 
 <script type="text/javascript" src="js/main.js"></script>
 

@@ -1,11 +1,16 @@
+//var persons = null;
+//var self = this;
+
 $(document).ready(function() {
+
+    //persons  = getPersons();
 
     $('#get-person-form').submit(function(event) {
 
         //stop submit the form, we will post it manually.
         event.preventDefault();
 
-        getPerson();
+        getPersons();
 
     });
 
@@ -28,7 +33,29 @@ $(document).ready(function() {
         $('#get-all-persons-div').removeClass('hidden');
     });
 
+    $('#update-existing-person-checkbox').click(function() {
+        // if ($('#update-existing-person-checkbox').is(':checked')) {
+        //     console.log('checked');
+        //     console.log('persons', self.persons);
+        //     console.log('size', self.persons.length);
+        //     if (self.persons) {
+        //         var i;
+        //         for (i = 0; i < self.persons.length; ++i) {
+        //             console.log('person: ', self.persons[i]);
+        //         }
+        //     }
+        // } else {
+        //     console.log('not checked!');
+        // }
+        //console.log(_);
+    });
+
 });
+
+function createDropdownOfPersons() {
+    var persons = getPersons();
+    console.log(persons);
+}
 
 
 function clearMainContainer() {
@@ -51,7 +78,7 @@ function getAndValidateDate(dateType) {
     return date;
 }
 
-function getPerson() {
+function getPersons() {
 
     $('#btn-search').prop('disabled', true);
 
@@ -118,6 +145,8 @@ function createPerson() {
 
             console.log('SUCCESS : ', data);
             $('#btn-search').prop('disabled', false);
+
+            //self.persons  = getPersons();
 
         },
         error: function (e) {

@@ -38,6 +38,7 @@ public class PersonController {
 
     /**
      * Get all persons by family branch (paternal, maternal, common)
+     * Paternal or maternal will always include common
      * @param familyBranch
      * @return List of persons
      */
@@ -46,6 +47,7 @@ public class PersonController {
     public List<Person> getAllPersonsByFamilyBranch(@PathVariable FamilyBranch familyBranch) {
         List<Person> persons = new ArrayList<>();
         personRepository.getPersonByFamilyBranch(familyBranch).forEach(persons::add);
+        personRepository.getPersonByFamilyBranch(FamilyBranch.COMMON).forEach(persons::add);
         return persons;
     }
 
