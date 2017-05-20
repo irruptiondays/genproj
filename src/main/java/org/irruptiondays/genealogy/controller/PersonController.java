@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Rest endpoints for CRUD transactions.
+ * Rest endpoints for CRUD transactions (persons).
  */
 @Controller
 @RequestMapping(value = {"/person", "/person/" }, method = RequestMethod.GET)
