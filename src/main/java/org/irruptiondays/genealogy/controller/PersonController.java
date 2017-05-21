@@ -3,6 +3,7 @@ package org.irruptiondays.genealogy.controller;
 import org.irruptiondays.genealogy.common.FamilyBranch;
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Person;
+import org.irruptiondays.genealogy.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,12 @@ import java.util.List;
 public class PersonController {
 
     private PersonRepository personRepository;
+    private PersonService personService;
 
     @Autowired
-    public PersonController(PersonRepository personRepository) {
+    public PersonController(PersonRepository personRepository, PersonService personService) {
         this.personRepository = personRepository;
+        this.personService = personService;
     }
 
     /**
@@ -82,6 +85,22 @@ public class PersonController {
     public void deletePerson(@PathVariable Long personId) {
         // TODO will need to deal with foreign keys etc.
         personRepository.delete(personId);
+    }
+
+    /**
+     * Sets parents of a given person
+     * @param originId
+     * @param fatherId
+     * @param motherId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/origin/{originId}/{fatherId}/{motherId}", method = {RequestMethod.POST, RequestMethod.PUT})
+    @ResponseBody
+    public Person setParents(@PathVariable Long originId,
+                           @PathVariable Long fatherId,
+                           @PathVariable Long motherId) throws Exception {
+        return personService.setParents(originId, fatherId, motherId);
     }
 
 }

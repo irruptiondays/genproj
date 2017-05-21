@@ -47,4 +47,28 @@ public class PersonService {
         // TODO implement this
         return null;
     }
+
+    public Person setParents(Long originId, Long fatherId, Long motherId) throws Exception {
+        if (originId == 0) {
+            // TODO make exceptions for stuff like this
+            throw new Exception();
+        }
+        Person origin = personRepository.findOne(originId);
+
+        if (fatherId != 0) {
+            Person father = personRepository.findOne(fatherId);
+            origin.setFather(father);
+        } else {
+            origin.setFather(null);
+        }
+
+        if (motherId != 0) {
+            Person mother = personRepository.findOne(motherId);
+            origin.setMother(mother);
+        } else {
+            origin.setMother(null);
+        }
+
+        return personRepository.save(origin);
+    }
 }
