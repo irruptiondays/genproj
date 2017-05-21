@@ -28,10 +28,10 @@ import static org.junit.Assert.*;
 public class MarriageRepositoryTest {
 
     @Autowired
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
 
     @Autowired
-    MarriageRepository marriageRepository;
+    private MarriageRepository marriageRepository;
 
     @Test
     public void testMarriage() {
@@ -59,5 +59,33 @@ public class MarriageRepositoryTest {
         List<Marriage> marriages = new ArrayList<>();
         marriageRepository.findAll().iterator().forEachRemaining(marriages::add);
         assertEquals("Should be 3, but was " + marriages.size(), 3, marriages.size());
+    }
+
+    @Test
+    public void testGetMarriagesByPerson() {
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+        Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
+        Person wife2 = personRepository.save(EntityCreator.createPerson("Sally2"));
+        Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
+
+        marriageRepository.save(new Marriage(person, wife, new Date()));
+        marriageRepository.save(new Marriage(person, wife2, new Date()));
+        marriageRepository.save(new Marriage(person, wife3, new Date()));
+
+        List<Marriage> marriages = new ArrayList<>();
+        marriageRepository.getMarriagesByPerson(person).iterator().forEachRemaining(marriages::add);
+        assertEquals("Should be 3, but was " + marriages.size(), 3, marriages.size());
+
+        marriages = new ArrayList<>();
+        marriageRepository.getMarriagesByPerson(wife).iterator().forEachRemaining(marriages::add);
+        assertEquals("Should be 1, but was " + marriages.size(), 1, marriages.size());
+
+        marriages = new ArrayList<>();
+        marriageRepository.getMarriagesByPerson(wife2).iterator().forEachRemaining(marriages::add);
+        assertEquals("Should be 1, but was " + marriages.size(), 1, marriages.size());
+
+        marriages = new ArrayList<>();
+        marriageRepository.getMarriagesByPerson(wife3).iterator().forEachRemaining(marriages::add);
+        assertEquals("Should be 1, but was " + marriages.size(), 1, marriages.size());
     }
 }

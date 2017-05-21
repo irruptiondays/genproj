@@ -83,8 +83,7 @@ public class PersonController {
     @RequestMapping(value = "/{personId}", method = RequestMethod.DELETE)
     @ResponseBody
     public void deletePerson(@PathVariable Long personId) {
-        // TODO will need to deal with foreign keys etc.
-        personRepository.delete(personId);
+        personService.deletePersonById(personId);
     }
 
     /**

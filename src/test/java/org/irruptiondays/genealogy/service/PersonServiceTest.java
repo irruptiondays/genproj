@@ -3,7 +3,11 @@ package org.irruptiondays.genealogy.service;
 import lombok.extern.slf4j.Slf4j;
 import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
+import org.irruptiondays.genealogy.dao.MarriageRepository;
+import org.irruptiondays.genealogy.dao.MiscDataRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
+import org.irruptiondays.genealogy.domain.Marriage;
+import org.irruptiondays.genealogy.domain.MiscData;
 import org.irruptiondays.genealogy.domain.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +17,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by tvalentine on 5/8/2017.
@@ -33,6 +37,12 @@ public class PersonServiceTest {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private MarriageRepository marriageRepository;
+
+    @Autowired
+    private MiscDataRepository miscDataRepository;
 
     @Test
     public void testGetSiblingsByPerson() {
@@ -96,5 +106,38 @@ public class PersonServiceTest {
         } catch (Exception e) {
             fail("Failed: " + e);
         }
+    }
+
+    @Test
+    public void testDeletePerson() {
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+        Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
+        Person wife2 = personRepository.save(EntityCreator.createPerson("Sally2"));
+        Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
+
+        Marriage marriage = marriageRepository.save(new Marriage(person, wife, new Date()));
+        Marriage marriage2 = marriageRepository.save(new Marriage(person, wife2, new Date()));
+        Marriage marriage3 = marriageRepository.save(new Marriage(person, wife3, new Date()));
+
+        //Person person, String displayName, Date date, String text
+        MiscData miscData = miscDataRepository.save(new MiscData(person, "misc!", new Date(), "Mc"));
+
+        person = personRepository.findOne(person.getId());
+
+        assertEquals(3, marriageRepository.getMarriagesByPerson(person).size());
+        assertEquals(1, miscDataRepository.findByPerson(person).size());
+
+        personService.deletePersonById(person.getId());
+        assertEquals(0, marriageRepository.getMarriagesByPerson(person).size());
+        assertEquals(0, miscDataRepository.findByPerson(person).size());
+
+        assertNotNull(personRepository.findOne(wife.getId()));
+        assertNotNull(personRepository.findOne(wife.getId()));
+        assertNotNull(personRepository.findOne(wife.getId()));
+        assertNull(personRepository.findOne(person.getId()));
+        assertNull(marriageRepository.findOne(marriage.getId()));
+        assertNull(marriageRepository.findOne(marriage2.getId()));
+        assertNull(marriageRepository.findOne(marriage3.getId()));
+        assertNull(miscDataRepository.findOne(miscData.getId()));
     }
 }

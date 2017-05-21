@@ -1,6 +1,10 @@
 package org.irruptiondays.genealogy.service;
 
+import org.irruptiondays.genealogy.dao.MarriageRepository;
+import org.irruptiondays.genealogy.dao.MiscDataRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
+import org.irruptiondays.genealogy.domain.Marriage;
+import org.irruptiondays.genealogy.domain.MiscData;
 import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,15 @@ import java.util.Set;
 public class PersonService {
 
     private PersonRepository personRepository;
+    private MarriageRepository marriageRepository;
+    private MiscDataRepository miscDataRepository;
+
 
     @Autowired
-    public PersonService(PersonRepository personRepository) {
+    public PersonService(PersonRepository personRepository, MarriageRepository marriageRepository, MiscDataRepository miscDataRepository) {
         this.personRepository = personRepository;
+        this.marriageRepository = marriageRepository;
+        this.miscDataRepository = miscDataRepository;
     }
 
     public Set<Person> getSiblingsByPerson(Person person) {
@@ -79,5 +88,26 @@ public class PersonService {
         }
 
         return personRepository.save(origin);
+    }
+
+    public void deletePersonById(Long personId) {
+        Person person = personRepository.findOne(personId);
+        deleteMarriagesByPerson(person);
+        deleteMiscDataByPerson(person);
+        personRepository.delete(person);
+    }
+
+    public void deleteMiscDataByPerson(Person person) {
+        Set<MiscData> miscData = miscDataRepository.findByPerson(person);
+        if (miscData != null && miscData.size() > 0) {
+            miscData.forEach(m -> miscDataRepository.delete(m));
+        }
+    }
+
+    public void deleteMarriagesByPerson(Person person) {
+        Set<Marriage> marriages = marriageRepository.getMarriagesByPerson(person);
+        if (marriages != null && marriages.size() > 0) {
+            marriages.forEach(m -> marriageRepository.delete(m));
+        }
     }
 }
