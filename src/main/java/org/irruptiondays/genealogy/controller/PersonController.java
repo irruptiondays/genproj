@@ -88,11 +88,12 @@ public class PersonController {
     }
 
     /**
-     * Sets parents of a given person
-     * @param originId
-     * @param fatherId
-     * @param motherId
-     * @return
+     * Sets parents for a person with only IDs.
+     * If id == 0, no parent is set and any previous parent is removed.
+     * @param originId The is of the person who is having his parents set
+     * @param fatherId The id of the father
+     * @param motherId The id of the mother
+     * @return Person The person who now has parents sets
      * @throws Exception
      */
     @RequestMapping(value = "/origin/{originId}/{fatherId}/{motherId}", method = {RequestMethod.POST, RequestMethod.PUT})

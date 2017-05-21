@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by tvalentine on 5/8/2017.
@@ -61,5 +62,39 @@ public class PersonServiceTest {
         Set<Person> siblings = personService.getSiblingsByPerson(person);
 
         assertEquals(2, siblings.size());
+    }
+
+    @Test
+    public void testSetParents() {
+        Person father = personRepository.save(EntityCreator.createPerson("Daddy"));
+        Person mother = personRepository.save(EntityCreator.createPerson("Mommy"));
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+
+        try {
+            person = personService.setParents(person.getId(), father.getId(), mother.getId());
+            assertEquals("Daddy", person.getFather().getFirstName());
+            assertEquals("Mommy", person.getMother().getFirstName());
+        } catch (Exception e) {
+            fail("Failed: "+ e);
+        }
+    }
+
+    @Test
+    public void testSetParentsNulls() {
+        Person father = personRepository.save(EntityCreator.createPerson("Daddy"));
+        Person mother = personRepository.save(EntityCreator.createPerson("Mommy"));
+        Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
+
+        try {
+            person = personService.setParents(person.getId(), father.getId(), mother.getId());
+            assertEquals("Daddy", person.getFather().getFirstName());
+            assertEquals("Mommy", person.getMother().getFirstName());
+
+            person = personService.setParents(person.getId(), 0l, 0l);
+            assertEquals(null, person.getFather());
+            assertEquals(null, person.getMother());
+        } catch (Exception e) {
+            fail("Failed: " + e);
+        }
     }
 }
