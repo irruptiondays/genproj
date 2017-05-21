@@ -8,6 +8,7 @@ import org.irruptiondays.genealogy.common.FamilyBranch;
 import javax.persistence.*;
 import java.util.*;
 import lombok.Data;
+import org.irruptiondays.genealogy.common.Gender;
 
 /**
  * A person, or a node in a family tree
@@ -30,6 +31,10 @@ public class Person {
     private Date deathdate;
     private String birthplace;
     private String currentOrLateHome;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Enumerated(EnumType.STRING)
     private FamilyBranch familyBranch;
 
