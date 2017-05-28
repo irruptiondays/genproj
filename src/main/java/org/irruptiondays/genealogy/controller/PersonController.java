@@ -35,7 +35,7 @@ public class PersonController {
     @ResponseBody
     public List<Person> getAllPersons() {
         List<Person> persons = new ArrayList<>();
-        personRepository.findAll().forEach(persons::add);
+        personRepository.getAllPersonsOrderByLastNameAscFirstNameAsc().forEach(persons::add);
         return persons;
     }
 

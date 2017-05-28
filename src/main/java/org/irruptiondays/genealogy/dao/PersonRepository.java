@@ -3,7 +3,6 @@ package org.irruptiondays.genealogy.dao;
 import org.irruptiondays.genealogy.common.FamilyBranch;
 import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +12,6 @@ import java.util.Set;
 /**
  * Repository for person CRUD.
  */
-//@RestResource(path = "persons", rel="persons")
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
@@ -31,4 +29,7 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
      * @return Set of persons
      */
     Set<Person> getPersonByFamilyBranch(FamilyBranch familyBranch);
+
+    @Query("SELECT p FROM Person p order by p.lastName, p.firstName")
+    Set<Person> getAllPersonsOrderByLastNameAscFirstNameAsc();
 }
