@@ -131,6 +131,16 @@ public class PersonController {
         return marriageRepository.getMarriagesByPerson(person);
     }
 
+    /**
+     * Delete a marriage by the marriage id
+     * @param marriageId The id of the marriage
+     */
+    @RequestMapping(value = "/marriage/{marriageId}", method = {RequestMethod.DELETE})
+    @ResponseBody
+    public void deleteMarriageById(@PathVariable long marriageId) {
+        marriageRepository.delete(marriageId);
+    }
+
     @RequestMapping(value = "/marriage/all", method = {RequestMethod.GET})
     @ResponseBody
     public Set<Marriage> getMarriagesByPerson() {
