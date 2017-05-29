@@ -4,6 +4,7 @@ import org.irruptiondays.genealogy.dao.MarriageRepository;
 import org.irruptiondays.genealogy.dao.MiscDataRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Marriage;
+import org.irruptiondays.genealogy.domain.MarriageSummary;
 import org.irruptiondays.genealogy.domain.MiscData;
 import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +110,23 @@ public class PersonService {
         if (marriages != null && marriages.size() > 0) {
             marriages.forEach(m -> marriageRepository.delete(m));
         }
+    }
+
+    public Set<MarriageSummary> getSpousesForPersonId(long id) {
+        Set<Marriage> marriages = marriageRepository.getMarriagesByPersonId(id);
+        Set<MarriageSummary> marriageSummaries = new HashSet<>();
+        if (marriages != null) {
+            marriages.stream().forEach(m -> {
+                Person spouse = getSpouseByPersonId(id, m);
+                marriageSummaries.add(new MarriageSummary(m.getId(), spouse, m.getDate()));
+            });
+        }
+        return marriageSummaries;
+    }
+
+    private Person getSpouseByPersonId(long id, Marriage marriage) {
+        return id != marriage.getSpouse1().getId()
+                ? marriage.getSpouse1()
+                : marriage.getSpouse2();
     }
 }

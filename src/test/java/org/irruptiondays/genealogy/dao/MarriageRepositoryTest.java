@@ -4,6 +4,7 @@ import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
 import org.irruptiondays.genealogy.domain.Marriage;
 import org.irruptiondays.genealogy.domain.Person;
+import org.irruptiondays.genealogy.service.PersonService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class MarriageRepositoryTest {
 
     @Autowired
     private MarriageRepository marriageRepository;
+
+    @Autowired
+    private PersonService personService;
 
     @Test
     public void testMarriage() {
@@ -67,10 +71,12 @@ public class MarriageRepositoryTest {
         Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
         Person wife2 = personRepository.save(EntityCreator.createPerson("Sally2"));
         Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
+        Person husband2 = personRepository.save(EntityCreator.createPerson("Bobby2"));
 
         marriageRepository.save(new Marriage(person, wife, new Date()));
         marriageRepository.save(new Marriage(person, wife2, new Date()));
         marriageRepository.save(new Marriage(person, wife3, new Date()));
+        marriageRepository.save(new Marriage(husband2, wife3, new Date()));
 
         List<Marriage> marriages = new ArrayList<>();
         marriageRepository.getMarriagesByPerson(person).iterator().forEachRemaining(marriages::add);
@@ -86,6 +92,10 @@ public class MarriageRepositoryTest {
 
         marriages = new ArrayList<>();
         marriageRepository.getMarriagesByPerson(wife3).iterator().forEachRemaining(marriages::add);
+        assertEquals("Should be 2, but was " + marriages.size(), 2, marriages.size());
+
+        marriages = new ArrayList<>();
+        marriageRepository.getMarriagesByPerson(husband2).iterator().forEachRemaining(marriages::add);
         assertEquals("Should be 1, but was " + marriages.size(), 1, marriages.size());
     }
 }

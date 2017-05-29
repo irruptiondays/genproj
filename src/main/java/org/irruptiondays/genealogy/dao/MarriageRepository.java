@@ -17,4 +17,7 @@ public interface MarriageRepository extends CrudRepository<Marriage, Long> {
 
     @Query("SELECT m FROM Marriage m WHERE m.spouse1 = :person OR m.spouse2 = :person")
     Set<Marriage> getMarriagesByPerson(@Param("person") Person person);
+
+    @Query("SELECT m FROM Marriage m WHERE m.spouse1.id = :personId OR m.spouse2.id = :personId")
+    Set<Marriage> getMarriagesByPersonId(@Param("personId") long personId);
 }
