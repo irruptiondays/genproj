@@ -24,7 +24,6 @@ public class MiscData {
     private String displayName;
     private Date date;
 
-    @Column(length=32000)
     private String text;
 
 
