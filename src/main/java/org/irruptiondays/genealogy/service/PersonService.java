@@ -4,7 +4,7 @@ import org.irruptiondays.genealogy.dao.MarriageRepository;
 import org.irruptiondays.genealogy.dao.MiscDataRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Marriage;
-import org.irruptiondays.genealogy.domain.MarriageSummary;
+import org.irruptiondays.genealogy.model.MarriageSummary;
 import org.irruptiondays.genealogy.domain.MiscData;
 import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,7 @@ import org.irruptiondays.genealogy.common.FamilyBranch;
 import org.irruptiondays.genealogy.dao.MarriageRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Marriage;
-import org.irruptiondays.genealogy.domain.MarriageSummary;
+import org.irruptiondays.genealogy.model.MarriageSummary;
 import org.irruptiondays.genealogy.domain.Person;
 import org.irruptiondays.genealogy.service.PersonService;
 import org.irruptiondays.genealogy.util.Tools;

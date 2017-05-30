@@ -1,9 +1,10 @@
-package org.irruptiondays.genealogy.domain;
+package org.irruptiondays.genealogy.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.irruptiondays.genealogy.domain.Person;
 
 import java.util.Date;
 
