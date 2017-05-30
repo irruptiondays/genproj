@@ -9,7 +9,7 @@ import org.irruptiondays.genealogy.domain.Person;
 import java.util.Date;
 
 /**
- * Created by TValentine on 5/28/17.
+ * Models a spouse for the front end.
  */
 @Data
 @AllArgsConstructor

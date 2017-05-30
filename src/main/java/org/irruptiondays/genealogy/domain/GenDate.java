@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by TValentine on 12/8/15.
+ * Custom date object to represent partial dates.
+ * e.g. A person's birth day and month are known, but the year is not.
+ * Currently not used.
  */
 //@Entity
 public class GenDate {

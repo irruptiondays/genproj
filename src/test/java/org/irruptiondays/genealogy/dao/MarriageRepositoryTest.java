@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by TValentine on 5/6/17.
+ * Tests anything related to marriages.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = GenprojApplication.class)

@@ -5,7 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Created by TValentine on 12/8/15.
+ * Models a location that could be used for birthplace, residence, etc.
+ * Currently not used.
  */
 //@Entity
 public class GenLocale {

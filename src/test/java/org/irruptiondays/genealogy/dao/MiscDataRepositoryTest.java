@@ -22,7 +22,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by TValentine on 5/7/17.
+ * Tests anything related to misc data.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = GenprojApplication.class)

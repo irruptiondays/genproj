@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 
 /**
- * Created by TValentine on 5/6/17.
+ * Tests anything related to the person repository.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = GenprojApplication.class)

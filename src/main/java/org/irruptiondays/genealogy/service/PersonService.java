@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by tvalentine on 5/8/2017.
+ * Service methods where extra business logic lives needed for rest calls.
  */
 @Service
 public class PersonService {

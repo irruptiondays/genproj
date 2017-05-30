@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by TValentine on 5/14/16.
+ * Helper methods
  */
 public class Tools {
 
