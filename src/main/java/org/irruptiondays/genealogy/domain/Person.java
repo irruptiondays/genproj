@@ -1,13 +1,11 @@
 package org.irruptiondays.genealogy.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.irruptiondays.genealogy.common.FamilyBranch;
 
 import javax.persistence.*;
 import java.util.*;
-import lombok.Data;
+
 import org.irruptiondays.genealogy.common.Gender;
 
 /**
@@ -18,6 +16,7 @@ import org.irruptiondays.genealogy.common.Gender;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Person {
     @Id
     @GeneratedValue
@@ -50,4 +49,29 @@ public class Person {
             cascade = { CascadeType.REFRESH }
     )
     private Person father;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    private String printedName;
+
+    public String getPrintedName() {
+        StringBuffer sb = new StringBuffer();
+        if (lastName != null) {
+            sb.append(lastName).append(", ");
+        }
+        if (firstName != null) {
+            sb.append(firstName).append(" ");
+        }
+        if (middleNames != null) {
+            sb.append(middleNames).append(" ");
+        }
+        if (maidenName != null) {
+            sb.append(maidenName).append(" ");
+        }
+        if (suffix != null) {
+            sb.append(suffix);
+        }
+
+        return sb.toString();
+    }
 }
