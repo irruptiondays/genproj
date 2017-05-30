@@ -30,6 +30,12 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
      */
     Set<Person> getPersonByFamilyBranch(FamilyBranch familyBranch);
 
+    /**
+     * Returns alphabetical listing of all people in database
+     * @return Set of ordered persons
+     */
     @Query("SELECT p FROM Person p order by p.lastName, p.firstName")
     Set<Person> getAllPersonsOrderByLastNameAscFirstNameAsc();
+
+
 }
