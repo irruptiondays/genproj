@@ -20,5 +20,6 @@ public class MarriageSummary {
     private long id;
     private Person spouse;
     private Date date;
+    private Boolean mostRecent;
 
 }

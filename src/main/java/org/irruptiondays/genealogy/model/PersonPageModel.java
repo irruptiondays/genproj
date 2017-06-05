@@ -1,17 +1,12 @@
 package org.irruptiondays.genealogy.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.irruptiondays.genealogy.domain.MiscData;
-import org.irruptiondays.genealogy.domain.Person;
+import lombok.*;
 
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 /**
- * Models a person's entire family when generating pages.
+ * Models a person's entire family when generating HTML pages.
  */
 @Data
 @Builder
@@ -19,8 +14,38 @@ import java.util.Set;
 @NoArgsConstructor
 public class PersonPageModel {
 
-    private Person person;
-    private Set<Person> siblings = new HashSet<>(0);
-    private Set<Person> children = new HashSet<>(0);
-    private Set<MiscData> miscData = new HashSet<>(0);
+    private long id;
+    private String firstName;
+    private String middleNames;
+    private String lastName;
+    private String suffix;
+    private String maidenName;
+    private Date birthdate;
+    private Date deathdate;
+    private String birthplace;
+    private String currentOrLateHome;
+    private Long fatherId;
+    private Long motherId;
+    private Long currentSpouseId;
+    private Set<Long> siblingIds;
+    private Set<Long> childrenIds;
+
+    /**
+     * Generate a filename for a person.
+     * Remove spaces, periods (initials and suffixes), nulls, apostrophes
+     *
+     * @return String The filename to generate
+     */
+    public String getFileName() {
+        return (String.valueOf(id) + "-" +
+                lastName + "-" + firstName + "-" +
+                middleNames + "-" + maidenName +
+                "-" + suffix)
+                .replace("  ", " ")
+                .replace(" ", "-")
+                .replace("null", "")
+                .replace("'", "")
+                .replace(".", "")
+                .toLowerCase();
+    }
 }

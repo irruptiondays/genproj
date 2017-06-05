@@ -51,9 +51,6 @@ public class Person {
     private Person father;
 
     @Transient
-    @Getter(AccessLevel.NONE)
-    private String printedName;
-
     public String getPrintedName() {
         StringBuffer sb = new StringBuffer();
         if (lastName != null) {
@@ -73,5 +70,15 @@ public class Person {
         }
 
         return sb.toString();
+    }
+
+    @Transient
+    public Long getFatherId() {
+        return father != null ? father.getId() : 0;
+    }
+
+    @Transient
+    public Long getMotherId() {
+        return mother != null ? mother.getId() : 0;
     }
 }

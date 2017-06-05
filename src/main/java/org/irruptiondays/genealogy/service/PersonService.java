@@ -118,7 +118,7 @@ public class PersonService {
         if (marriages != null) {
             marriages.stream().forEach(m -> {
                 Person spouse = getSpouseByPersonId(id, m);
-                marriageSummaries.add(new MarriageSummary(m.getId(), spouse, m.getDate()));
+                marriageSummaries.add(new MarriageSummary(m.getId(), spouse, m.getDate(), null));
             });
         }
         return marriageSummaries;
