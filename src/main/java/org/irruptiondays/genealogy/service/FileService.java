@@ -1,9 +1,11 @@
 package org.irruptiondays.genealogy.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.irruptiondays.genealogy.dao.MarriageRepository;
 import org.irruptiondays.genealogy.dao.PersonRepository;
 import org.irruptiondays.genealogy.domain.Marriage;
 import org.irruptiondays.genealogy.domain.Person;
+import org.irruptiondays.genealogy.model.MarriageSummary;
 import org.irruptiondays.genealogy.model.PersonPageModel;
 import org.irruptiondays.genealogy.util.Tools;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
  * Service class to generate the HTML files.
  */
 @Service
+@Slf4j
 public class FileService {
 
     private PersonService personService;
@@ -35,7 +38,7 @@ public class FileService {
     public Set<PersonPageModel> getAllPersonsAsPersonPageModels() {
         Set<Person> personSet = Tools.iterableToSet(personRepository.findAll());
         Set<PersonPageModel> personPageModelSet = new HashSet<>();
-        personSet.stream().forEach(p -> personPageModelSet.add(getPersonPageModelForPerson(p)));
+        personSet.forEach(p -> personPageModelSet.add(getPersonPageModelForPerson(p)));
         return personPageModelSet;
     }
 
@@ -49,7 +52,7 @@ public class FileService {
         Set<Person> siblings = personService.getSiblingsByPerson(person);
         personPageModel.setSiblingIds(getIdsForSet(siblings));
 
-        personPageModel.setCurrentSpouseId(getCurrentMarriageForPerson(person.getId()));
+        setCurrentSpouseData(personPageModel);
 
         return personPageModel;
     }
@@ -67,17 +70,27 @@ public class FileService {
         return personPageModelMap;
     }
 
-    private long getCurrentMarriageForPerson(long id) {
+    private void setCurrentSpouseData(PersonPageModel personPageModel) {
+        MarriageSummary summary = getCurrentMarriageForPerson(personPageModel.getId());
+        personPageModel.setCurrentSpouseId(summary != null ? summary.getSpouse().getId() : 0);
+        personPageModel.setMarriageAnniversary(summary != null ? summary.getDate() : null);
+    }
+
+    private MarriageSummary getCurrentMarriageForPerson(long id) {
         Set<Marriage> marriages = marriageRepository.getMarriagesByPersonId(id);
         if (marriages != null) {
             for (Marriage m : marriages) {
                 if (m.isMostRecent()) {
                     Person p = personService.getSpouseByPersonId(id, m);
-                    return p != null ? p.getId() : 0;
+                    if (p == null) {
+                        log.error("No person when search for marriage!");
+                        return null;
+                    }
+                    return new MarriageSummary(m.getId(), p, m.getDate(), m.isMostRecent());
                 }
             }
         }
-        return 0;
+        return null;
     }
 
 }

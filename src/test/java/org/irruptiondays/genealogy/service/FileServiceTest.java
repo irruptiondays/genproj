@@ -154,17 +154,32 @@ public class FileServiceTest {
         assertEquals(Long.valueOf(dad.getId()), personPageModelMap.get(mom.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(mom.getId()), personPageModelMap.get(dad.getId()).getCurrentSpouseId());
 
+        assertEquals(new Date(-1111111), personPageModelMap.get(mom.getId()).getMarriageAnniversary());
+        assertEquals(new Date(-1111111), personPageModelMap.get(dad.getId()).getMarriageAnniversary());
+
         assertEquals(Long.valueOf(child1.getId()), personPageModelMap.get(spouse1b.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(spouse1b.getId()), personPageModelMap.get(child1.getId()).getCurrentSpouseId());
 
+        assertEquals(new Date(111222), personPageModelMap.get(spouse1b.getId()).getMarriageAnniversary());
+        assertEquals(new Date(111222), personPageModelMap.get(child1.getId()).getMarriageAnniversary());
+
         assertEquals(Long.valueOf(child2.getId()), personPageModelMap.get(spouse2.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(spouse2.getId()), personPageModelMap.get(child2.getId()).getCurrentSpouseId());
+
+        assertEquals(new Date(11122), personPageModelMap.get(spouse2.getId()).getMarriageAnniversary());
+        assertEquals(new Date(11122), personPageModelMap.get(child2.getId()).getMarriageAnniversary());
 
         assertEquals(Long.valueOf(0L), personPageModelMap.get(spouse1a.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild1a.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild1b.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild2.getId()).getCurrentSpouseId());
         assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild21.getId()).getCurrentSpouseId());
+
+        assertEquals(null, personPageModelMap.get(spouse1a.getId()).getMarriageAnniversary());
+        assertEquals(null, personPageModelMap.get(grandchild1a.getId()).getMarriageAnniversary());
+        assertEquals(null, personPageModelMap.get(grandchild1b.getId()).getMarriageAnniversary());
+        assertEquals(null, personPageModelMap.get(grandchild2.getId()).getMarriageAnniversary());
+        assertEquals(null, personPageModelMap.get(grandchild21.getId()).getMarriageAnniversary());
 
     }
 

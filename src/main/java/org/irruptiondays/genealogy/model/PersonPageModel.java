@@ -28,6 +28,7 @@ public class PersonPageModel {
     private Long fatherId;
     private Long motherId;
     private Long currentSpouseId;
+    private Date marriageAnniversary;
     private Set<Long> siblingIds = new HashSet<>();
     private Set<Long> childrenIds = new HashSet<>();
 
