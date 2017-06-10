@@ -32,5 +32,6 @@ public class Marriage {
     @JoinColumn(name = "spouse2")
     private Person spouse2;
     private Date date;
+    private boolean mostRecent;
 
 }
