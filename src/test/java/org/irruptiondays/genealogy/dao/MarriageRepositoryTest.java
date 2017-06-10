@@ -4,7 +4,6 @@ import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
 import org.irruptiondays.genealogy.domain.Marriage;
 import org.irruptiondays.genealogy.domain.Person;
-import org.irruptiondays.genealogy.service.PersonService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +33,12 @@ public class MarriageRepositoryTest {
     @Autowired
     private MarriageRepository marriageRepository;
 
-    @Autowired
-    private PersonService personService;
-
     @Test
     public void testMarriage() {
         Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
         Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
 
-        Marriage marriage = marriageRepository.save(new Marriage(person, wife, new Date()));
+        Marriage marriage = marriageRepository.save(new Marriage(person, wife, new Date(), true));
         assertNotNull(marriage);
         assertEquals("Bobby", marriage.getSpouse1().getFirstName());
         assertEquals("Sally", marriage.getSpouse2().getFirstName());
@@ -56,9 +52,9 @@ public class MarriageRepositoryTest {
         Person wife2 = personRepository.save(EntityCreator.createPerson("Sally2"));
         Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
 
-        marriageRepository.save(new Marriage(person, wife, new Date()));
-        marriageRepository.save(new Marriage(person, wife2, new Date()));
-        marriageRepository.save(new Marriage(person, wife3, new Date()));
+        marriageRepository.save(new Marriage(person, wife, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife2, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife3, new Date(), false));
 
         List<Marriage> marriages = new ArrayList<>();
         marriageRepository.findAll().iterator().forEachRemaining(marriages::add);
@@ -73,10 +69,10 @@ public class MarriageRepositoryTest {
         Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
         Person husband2 = personRepository.save(EntityCreator.createPerson("Bobby2"));
 
-        marriageRepository.save(new Marriage(person, wife, new Date()));
-        marriageRepository.save(new Marriage(person, wife2, new Date()));
-        marriageRepository.save(new Marriage(person, wife3, new Date()));
-        marriageRepository.save(new Marriage(husband2, wife3, new Date()));
+        marriageRepository.save(new Marriage(person, wife, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife2, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife3, new Date(), false));
+        marriageRepository.save(new Marriage(husband2, wife3, new Date(), false));
 
         List<Marriage> marriages = new ArrayList<>();
         marriageRepository.getMarriagesByPerson(person).iterator().forEachRemaining(marriages::add);

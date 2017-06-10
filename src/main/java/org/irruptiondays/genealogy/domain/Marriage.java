@@ -16,10 +16,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Marriage {
 
-    public Marriage(Person spouse1, Person spouse2, Date date) {
+    public Marriage(Person spouse1, Person spouse2, Date date, boolean mostRecent) {
         this.spouse1 = spouse1;
         this.spouse2 = spouse2;
         this.date = date;
+        this.mostRecent = mostRecent;
     }
 
     @Id

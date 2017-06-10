@@ -1,5 +1,6 @@
 package org.irruptiondays.genealogy.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.irruptiondays.genealogy.EntityCreator;
 import org.irruptiondays.genealogy.GenprojApplication;
 import org.irruptiondays.genealogy.dao.MarriageRepository;
@@ -28,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = GenprojApplication.class)
 @WebAppConfiguration
+@Slf4j
 @Transactional
 public class FileServiceTest {
 
@@ -54,10 +56,10 @@ public class FileServiceTest {
         Person grandchild2 = personRepository.save(EntityCreator.createPerson("Grandchild2"));
         Person grandchild21 = personRepository.save(EntityCreator.createPerson("Grandchild2-1"));
 
-        marriageRepository.save(new Marriage(dad, mom, new Date(-1111111)));
-        marriageRepository.save(new Marriage(child1, spouse1a, new Date(111)));
-        marriageRepository.save(new Marriage(child1, spouse1b, new Date(111222)));
-        marriageRepository.save(new Marriage(child2, spouse2, new Date(11122)));
+        marriageRepository.save(new Marriage(dad, mom, new Date(-1111111), true));
+        marriageRepository.save(new Marriage(child1, spouse1a, new Date(111), false));
+        marriageRepository.save(new Marriage(child1, spouse1b, new Date(111222), true));
+        marriageRepository.save(new Marriage(child2, spouse2, new Date(11122), true));
 
         personService.setParents(child1.getId(), dad.getId(), mom.getId());
         personService.setParents(child2.getId(), dad.getId(), mom.getId());
@@ -145,6 +147,24 @@ public class FileServiceTest {
         assertEquals(Long.valueOf(0), personPageModelMap.get(spouse1a.getId()).getFatherId());
         assertEquals(Long.valueOf(0), personPageModelMap.get(spouse1b.getId()).getFatherId());
         assertEquals(Long.valueOf(0), personPageModelMap.get(spouse2.getId()).getFatherId());
+
+
+        // Testing marriage relationships
+
+        assertEquals(Long.valueOf(dad.getId()), personPageModelMap.get(mom.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(mom.getId()), personPageModelMap.get(dad.getId()).getCurrentSpouseId());
+
+        assertEquals(Long.valueOf(child1.getId()), personPageModelMap.get(spouse1b.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(spouse1b.getId()), personPageModelMap.get(child1.getId()).getCurrentSpouseId());
+
+        assertEquals(Long.valueOf(child2.getId()), personPageModelMap.get(spouse2.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(spouse2.getId()), personPageModelMap.get(child2.getId()).getCurrentSpouseId());
+
+        assertEquals(Long.valueOf(0L), personPageModelMap.get(spouse1a.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild1a.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild1b.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild2.getId()).getCurrentSpouseId());
+        assertEquals(Long.valueOf(0L), personPageModelMap.get(grandchild21.getId()).getCurrentSpouseId());
 
     }
 

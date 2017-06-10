@@ -124,7 +124,7 @@ public class PersonService {
         return marriageSummaries;
     }
 
-    private Person getSpouseByPersonId(long id, Marriage marriage) {
+    public Person getSpouseByPersonId(long id, Marriage marriage) {
         return id != marriage.getSpouse1().getId()
                 ? marriage.getSpouse1()
                 : marriage.getSpouse2();

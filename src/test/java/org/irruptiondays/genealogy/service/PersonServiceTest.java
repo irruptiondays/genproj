@@ -118,9 +118,9 @@ public class PersonServiceTest {
         Person wife2 = personRepository.save(EntityCreator.createPerson("Sally2"));
         Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
 
-        Marriage marriage = marriageRepository.save(new Marriage(person, wife, new Date()));
-        Marriage marriage2 = marriageRepository.save(new Marriage(person, wife2, new Date()));
-        Marriage marriage3 = marriageRepository.save(new Marriage(person, wife3, new Date()));
+        Marriage marriage = marriageRepository.save(new Marriage(person, wife, new Date(), false));
+        Marriage marriage2 = marriageRepository.save(new Marriage(person, wife2, new Date(), false));
+        Marriage marriage3 = marriageRepository.save(new Marriage(person, wife3, new Date(), false));
 
         //Person person, String displayName, Date date, String text
         MiscData miscData = miscDataRepository.save(new MiscData(person, "misc!", new Date(), "Mc"));
@@ -152,10 +152,10 @@ public class PersonServiceTest {
         Person wife3 = personRepository.save(EntityCreator.createPerson("Sally3"));
         Person husband2 = personRepository.save(EntityCreator.createPerson("Bobby2"));
 
-        marriageRepository.save(new Marriage(person, wife, new Date()));
-        marriageRepository.save(new Marriage(person, wife2, new Date()));
-        marriageRepository.save(new Marriage(person, wife3, new Date()));
-        marriageRepository.save(new Marriage(husband2, wife3, new Date()));
+        marriageRepository.save(new Marriage(person, wife, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife2, new Date(), false));
+        marriageRepository.save(new Marriage(person, wife3, new Date(), false));
+        marriageRepository.save(new Marriage(husband2, wife3, new Date(), false));
 
         List<MarriageSummary> marriages = new ArrayList<>();
         personService.getSpousesForPersonId(person.getId()).iterator().forEachRemaining(marriages::add);

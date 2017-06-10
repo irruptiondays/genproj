@@ -68,7 +68,7 @@ public class PersonRepositoryTest {
         Person person = personRepository.save(EntityCreator.createPerson("Bobby"));
         Person wife = personRepository.save(EntityCreator.createPerson("Sally"));
 
-        Marriage marriage = new Marriage(person, wife, new Date());
+        Marriage marriage = new Marriage(person, wife, new Date(), true);
     }
 
     @Test
