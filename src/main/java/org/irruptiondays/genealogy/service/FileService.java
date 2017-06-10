@@ -55,6 +55,10 @@ public class FileService {
         return personSet.stream().map(p -> p.getId()).collect(Collectors.toSet());
     }
 
-
+    public Map<Long, PersonPageModel> getMap(Set<PersonPageModel> personPageModelSet) {
+        Map<Long, PersonPageModel> personPageModelMap = new HashMap<>();
+        personPageModelSet.forEach(p -> personPageModelMap.put(p.getId(), p));
+        return personPageModelMap;
+    }
 
 }

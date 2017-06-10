@@ -16,9 +16,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the FileService
@@ -68,5 +71,37 @@ public class FileServiceTest {
 
         Set<PersonPageModel> personPageModelSet = fileService.getAllPersonsAsPersonPageModels();
         assertEquals(11, personPageModelSet.size());
+
+        Map<Long, PersonPageModel> personPageModelMap = fileService.getMap(personPageModelSet);
+
+        assertTrue(has(personPageModelMap.get(dad.getId()).getChildrenIds(), child1.getId()));
+        assertTrue(has(personPageModelMap.get(dad.getId()).getChildrenIds(), child2.getId()));
+
+        assertTrue(has(personPageModelMap.get(mom.getId()).getChildrenIds(), child1.getId()));
+        assertTrue(has(personPageModelMap.get(mom.getId()).getChildrenIds(), child2.getId()));
+
+        assertTrue(has(personPageModelMap.get(child1.getId()).getChildrenIds(), grandchild1a.getId()));
+        assertTrue(has(personPageModelMap.get(child1.getId()).getChildrenIds(), grandchild1b.getId()));
+
+        assertTrue(has(personPageModelMap.get(spouse1a.getId()).getChildrenIds(), grandchild1a.getId()));
+        assertTrue(!has(personPageModelMap.get(spouse1a.getId()).getChildrenIds(), grandchild1b.getId()));
+
+        assertTrue(!has(personPageModelMap.get(spouse1b.getId()).getChildrenIds(), grandchild1a.getId()));
+        assertTrue(has(personPageModelMap.get(spouse1b.getId()).getChildrenIds(), grandchild1b.getId()));
+
+        assertTrue(has(personPageModelMap.get(child2.getId()).getChildrenIds(), grandchild2.getId()));
+        assertTrue(has(personPageModelMap.get(child2.getId()).getChildrenIds(), grandchild21.getId()));
+
+        assertTrue(has(personPageModelMap.get(spouse2.getId()).getChildrenIds(), grandchild2.getId()));
+        assertTrue(has(personPageModelMap.get(spouse2.getId()).getChildrenIds(), grandchild21.getId()));
+
+        assertTrue(personPageModelMap.get(grandchild1a.getId()).getChildrenIds().isEmpty());
+        assertTrue(personPageModelMap.get(grandchild1b.getId()).getChildrenIds().isEmpty());
+        assertTrue(personPageModelMap.get(grandchild2.getId()).getChildrenIds().isEmpty());
+        assertTrue(personPageModelMap.get(grandchild21.getId()).getChildrenIds().isEmpty());
+    }
+
+    private boolean has(Set<Long> set, long id) {
+        return set.contains(id);
     }
 }
