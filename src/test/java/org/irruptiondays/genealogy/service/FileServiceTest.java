@@ -16,7 +16,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,6 +73,8 @@ public class FileServiceTest {
 
         Map<Long, PersonPageModel> personPageModelMap = fileService.getMap(personPageModelSet);
 
+        // Testing child relationships
+
         assertTrue(has(personPageModelMap.get(dad.getId()).getChildrenIds(), child1.getId()));
         assertTrue(has(personPageModelMap.get(dad.getId()).getChildrenIds(), child2.getId()));
 
@@ -99,6 +100,52 @@ public class FileServiceTest {
         assertTrue(personPageModelMap.get(grandchild1b.getId()).getChildrenIds().isEmpty());
         assertTrue(personPageModelMap.get(grandchild2.getId()).getChildrenIds().isEmpty());
         assertTrue(personPageModelMap.get(grandchild21.getId()).getChildrenIds().isEmpty());
+
+
+        // Testing sibling relationship
+
+        assertTrue(has(personPageModelMap.get(child1.getId()).getSiblingIds(), child2.getId()));
+        assertTrue(has(personPageModelMap.get(child2.getId()).getSiblingIds(), child1.getId()));
+
+        assertTrue(has(personPageModelMap.get(grandchild1a.getId()).getSiblingIds(), grandchild1b.getId()));
+        assertTrue(has(personPageModelMap.get(grandchild1b.getId()).getSiblingIds(), grandchild1a.getId()));
+
+        assertTrue(has(personPageModelMap.get(grandchild2.getId()).getSiblingIds(), grandchild21.getId()));
+        assertTrue(has(personPageModelMap.get(grandchild21.getId()).getSiblingIds(), grandchild2.getId()));
+
+        assertTrue(personPageModelMap.get(dad.getId()).getSiblingIds().isEmpty());
+        assertTrue(personPageModelMap.get(mom.getId()).getSiblingIds().isEmpty());
+        assertTrue(personPageModelMap.get(spouse1a.getId()).getSiblingIds().isEmpty());
+        assertTrue(personPageModelMap.get(spouse1b.getId()).getSiblingIds().isEmpty());
+        assertTrue(personPageModelMap.get(spouse2.getId()).getSiblingIds().isEmpty());
+
+
+        // Testing parent relationships
+
+        assertEquals(Long.valueOf(dad.getId()), personPageModelMap.get(child1.getId()).getFatherId());
+        assertEquals(Long.valueOf(mom.getId()), personPageModelMap.get(child1.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(dad.getId()), personPageModelMap.get(child2.getId()).getFatherId());
+        assertEquals(Long.valueOf(mom.getId()), personPageModelMap.get(child2.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(child1.getId()), personPageModelMap.get(grandchild1a.getId()).getFatherId());
+        assertEquals(Long.valueOf(spouse1a.getId()), personPageModelMap.get(grandchild1a.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(child1.getId()), personPageModelMap.get(grandchild1b.getId()).getFatherId());
+        assertEquals(Long.valueOf(spouse1b.getId()), personPageModelMap.get(grandchild1b.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(child2.getId()), personPageModelMap.get(grandchild2.getId()).getFatherId());
+        assertEquals(Long.valueOf(spouse2.getId()), personPageModelMap.get(grandchild2.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(child2.getId()), personPageModelMap.get(grandchild21.getId()).getFatherId());
+        assertEquals(Long.valueOf(spouse2.getId()), personPageModelMap.get(grandchild21.getId()).getMotherId());
+
+        assertEquals(Long.valueOf(0), personPageModelMap.get(dad.getId()).getFatherId());
+        assertEquals(Long.valueOf(0), personPageModelMap.get(mom.getId()).getFatherId());
+        assertEquals(Long.valueOf(0), personPageModelMap.get(spouse1a.getId()).getFatherId());
+        assertEquals(Long.valueOf(0), personPageModelMap.get(spouse1b.getId()).getFatherId());
+        assertEquals(Long.valueOf(0), personPageModelMap.get(spouse2.getId()).getFatherId());
+
     }
 
     private boolean has(Set<Long> set, long id) {
