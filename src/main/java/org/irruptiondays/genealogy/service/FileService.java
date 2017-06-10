@@ -30,9 +30,9 @@ public class FileService {
 
     public Set<PersonPageModel> getAllPersonsAsPersonPageModels() {
         Set<Person> personSet = Tools.iterableToSet(personRepository.findAll());
-
-        // TODO
-        return null;
+        Set<PersonPageModel> personPageModelSet = new HashSet<>();
+        personSet.stream().forEach(p -> personPageModelSet.add(getPersonPageModelForPerson(p)));
+        return personPageModelSet;
     }
 
     private PersonPageModel getPersonPageModelForPerson(Person person) {
