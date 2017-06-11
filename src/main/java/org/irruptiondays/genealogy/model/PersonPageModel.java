@@ -67,11 +67,11 @@ public class PersonPageModel {
         if (lastName != null) {
             sb.append(lastName).append(" ");
         }
-        if (suffix != null) {
+        if (suffix != null && !suffix.isEmpty()) {
             sb.append(", ").append(suffix);
         }
 
-        return sb.toString();
+        return sb.toString().replace(" ,", ",");
     }
 
     public boolean isFatherKnown() {

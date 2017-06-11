@@ -41,18 +41,22 @@ public class FileService {
 
         Map<Long, PersonPageModel> personMap = getMap(getAllPersonsAsPersonPageModels());
 
+        String directoryPath = "target/projectOutput-" + new Date().getTime() + "/";
+
+        File directory = new File(directoryPath + new Date().getTime() + "/");
+
+        if (!directory.exists()) {
+            if (!directory.mkdirs()) {
+                log.error("Could not create directory!");
+                return;
+            }
+        }
+
+
+        // TODO siblings are missing
         for (PersonPageModel p : personMap.values()) {
 
-            File directory = new File("target/projectOutput/");
-
-            if (!directory.exists()) {
-                if (!directory.mkdirs()) {
-                    log.error("Could not create directory!");
-                    return;
-                }
-            }
-
-            File file = new File("target/projectOutput/" + p.getFileName() +  ".html");
+            File file = new File(directoryPath + p.getFileName() +  ".html");
             file.createNewFile();
 
             FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
