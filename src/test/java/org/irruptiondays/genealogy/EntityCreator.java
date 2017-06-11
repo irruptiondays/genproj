@@ -17,6 +17,7 @@ public class EntityCreator {
                 .firstName(firstName)
                 .middleNames("John Jacob")
                 .familyBranch(FamilyBranch.PATERNAL)
+                .currentOrLateHome("Funnyville")
                 .build();
     }
 

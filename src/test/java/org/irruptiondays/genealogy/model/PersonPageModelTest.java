@@ -27,6 +27,6 @@ public class PersonPageModelTest {
                 .maidenName("G")
                 .suffix("Jr.")
                 .id(1L).build();
-        assertEquals("FileName was " + personPageModel.getFileName(), "1-obrien-george-henry-adam-g-jr", personPageModel.getFileName());
+        assertEquals("FileName was " + personPageModel.getFileName(), "obrien-george-henry-adam-g-jr-1", personPageModel.getFileName());
     }
 }

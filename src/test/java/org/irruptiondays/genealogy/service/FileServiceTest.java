@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -180,6 +181,8 @@ public class FileServiceTest {
         assertEquals(null, personPageModelMap.get(grandchild1b.getId()).getMarriageAnniversary());
         assertEquals(null, personPageModelMap.get(grandchild2.getId()).getMarriageAnniversary());
         assertEquals(null, personPageModelMap.get(grandchild21.getId()).getMarriageAnniversary());
+
+        fileService.generateProject();
 
     }
 

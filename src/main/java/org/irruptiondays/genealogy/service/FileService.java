@@ -12,6 +12,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,13 +30,127 @@ public class FileService {
     private PersonRepository personRepository;
     private MarriageRepository marriageRepository;
 
-    private Map<Long, PersonPageModel> personMap = new HashMap<>();
-
     @Autowired
     public FileService(PersonService personService, PersonRepository personRepository, MarriageRepository marriageRepository) {
         this.personRepository = personRepository;
         this.personService = personService;
         this.marriageRepository = marriageRepository;
+    }
+
+    public void generateProject() throws IOException {
+
+        Map<Long, PersonPageModel> personMap = getMap(getAllPersonsAsPersonPageModels());
+
+        for (PersonPageModel p : personMap.values()) {
+
+            File directory = new File("target/projectOutput/");
+
+            if (!directory.exists()) {
+                if (!directory.mkdirs()) {
+                    log.error("Could not create directory!");
+                    return;
+                }
+            }
+
+            File file = new File("target/projectOutput/" + p.getFileName() +  ".html");
+            file.createNewFile();
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            String properlyFormattedName = p.getPrintedNameTitleFormat();
+
+
+            bw.write("<html>");
+            bw.newLine();
+            bw.write("  <head>");
+
+            bw.newLine();
+
+            bw.write("    <title>" + properlyFormattedName + " | Genealogy Project | irruptiondays</title>");
+
+            bw.newLine();
+
+            bw.write("  </head>");
+
+            bw.newLine();
+
+            bw.write("  <body>");
+
+            bw.newLine();
+
+            bw.write("    <h1>" + properlyFormattedName + "</h1>");
+
+            //bw.write("<div style=\"display: block\">");
+
+            bw.write("<div>\n" +
+                    "        <span><strong>Date of Birth:</strong> " + p.getBirthdate() + "</span><br/>\n" +
+                    "        <span><strong>Birthplace:</strong> " + p.getBirthplace() + "</span><br/>\n" +
+                    "    </div>");
+
+
+            if (p.areParentsKnown()) {
+                bw.write("<div>\n");
+                if (p.isFatherKnown()) {
+                    bw.write("    <span><strong>Father: </strong>" + createPersonLink(personMap.get(p.getFatherId())) + "</span><br/>\n");
+                }
+                if (p.isMotherKnown()) {
+                    bw.write("    <span><strong>Mother: </strong>" + createPersonLink(personMap.get(p.getMotherId())) + "</span><br/>\n");
+                }
+                bw.write("</div>");
+            }
+
+            bw.newLine();
+
+            if (p.hasChildren()) {
+
+                bw.write("<div>\n" +
+                        "        <span><strong>Children: </strong></span>\n" +
+                        "        <ul style=\"list-style: none;\">\n");
+
+                for (Long id : p.getChildrenIds()) {
+                    bw.write("<li>" + createPersonLink(personMap.get(id)) + "</li>");
+                }
+
+                bw.write("        </ul>\n" +
+                        "    </div>");
+
+            }
+
+            if (p.hasSpouse()) {
+                bw.write("    <span><strong>Married: </strong>" + createPersonLink(personMap.get(p.getCurrentSpouseId())) + "</span><br/>\n");
+            }
+
+            if (p.isDead()) {
+                bw.write("<div>\n" +
+                        "        <span><strong>Date of Death:</strong> " + p.getDeathdate() + "</span><br/>\n" +
+                        "    </div>");
+            }
+
+            if (p.getCurrentOrLateHome() != null && !p.getCurrentOrLateHome().isEmpty()) {
+                bw.write("<div>\n" +
+                        "        <span><strong>Residence:</strong> " + p.getCurrentOrLateHome() + "</span><br/>\n" +
+                        "    </div>");
+            }
+
+            bw.write("  </body>");
+
+            bw.newLine();
+
+            bw.write("</html>");
+            bw.newLine();
+
+
+            bw.close();
+            fw.close();
+        }
+    }
+
+    private String createPersonLink(PersonPageModel person) {
+        if (person == null) {
+            return "";
+        }
+        return "<a href=\"" + person.getFileName() + ".html\">" + person.getPrintedNameTitleFormat() + "</a>";
     }
 
     public Set<PersonPageModel> getAllPersonsAsPersonPageModels() {

@@ -39,15 +39,62 @@ public class PersonPageModel {
      * @return String The filename to generate
      */
     public String getFileName() {
-        return (String.valueOf(id) + "-" +
-                lastName + "-" + firstName + "-" +
+        return (lastName + "-" + firstName + "-" +
                 middleNames + "-" + maidenName +
-                "-" + suffix)
+                "-" + suffix + "-" +
+                String.valueOf(id))
                 .replace("  ", " ")
                 .replace(" ", "-")
+                .replace("---", "-")
+                .replace("--", "-")
                 .replace("null", "")
                 .replace("'", "")
                 .replace(".", "")
                 .toLowerCase();
+    }
+
+    public String getPrintedNameTitleFormat() {
+        StringBuffer sb = new StringBuffer();
+        if (firstName != null) {
+            sb.append(firstName).append(" ");
+        }
+        if (middleNames != null) {
+            sb.append(middleNames).append(" ");
+        }
+        if (maidenName != null) {
+            sb.append(maidenName).append(" ");
+        }
+        if (lastName != null) {
+            sb.append(lastName).append(" ");
+        }
+        if (suffix != null) {
+            sb.append(", ").append(suffix);
+        }
+
+        return sb.toString();
+    }
+
+    public boolean isFatherKnown() {
+        return fatherId != null && fatherId != 0;
+    }
+
+    public boolean isMotherKnown() {
+        return motherId != null && motherId != 0;
+    }
+
+    public boolean areParentsKnown() {
+        return isFatherKnown() || isMotherKnown();
+    }
+
+    public boolean hasChildren() {
+        return childrenIds != null && childrenIds.size() > 0;
+    }
+
+    public boolean hasSpouse() {
+        return currentSpouseId != null && currentSpouseId != 0;
+    }
+
+    public boolean isDead() {
+        return deathdate != null;
     }
 }
