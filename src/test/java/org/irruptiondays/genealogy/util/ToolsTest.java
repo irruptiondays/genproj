@@ -7,7 +7,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by TValentine on 6/11/17.
+ * Testing for utility class.
  */
 public class ToolsTest {
 

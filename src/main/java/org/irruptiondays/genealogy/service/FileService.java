@@ -67,21 +67,7 @@ public class FileService {
 
             bw.write("<html>");
             bw.newLine();
-            bw.write("  <head>");
-
-            bw.newLine();
-
-            bw.write("    <title>" + properlyFormattedName + " | Genealogy Project | irruptiondays</title>");
-
-            bw.write("    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\" />");
-
-            bw.write("    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>");
-
-
-
-            bw.newLine();
-
-            bw.write("  </head>");
+            bw.write(printHtmlHeader(properlyFormattedName));
 
             bw.newLine();
 
@@ -151,8 +137,7 @@ public class FileService {
             if (p.hasSpouse()) {
                 bw.write("              <span><strong>Married: </strong>" +
                         createPersonLink(personMap.get(p.getCurrentSpouseId())) +
-                        " (" + Tools.dateString(p.getMarriageAnniversary()) +
-                        ")</span><br/>\n");
+                        printInlineDate(p.getMarriageAnniversary()) + "</span><br/>\n");
             }
 
             if (p.isDead()) {
@@ -182,6 +167,26 @@ public class FileService {
             bw.close();
             fw.close();
         }
+    }
+
+    private String printHtmlHeader(String properlyFormattedName) {
+        StringBuffer sb = new StringBuffer("  <head>\n");
+        sb.append("    <title>" + properlyFormattedName + " | Genealogy Project | irruptiondays</title>\n");
+
+        sb.append("    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\" />\n");
+
+        sb.append("    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>\n");
+
+        sb.append("  </head>\n");
+
+        return sb.toString();
+    }
+
+    private String printInlineDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+        return " (" + Tools.dateString(date) + ")";
     }
 
     private String createPersonLink(PersonPageModel person) {
