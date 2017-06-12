@@ -71,7 +71,7 @@ public class PersonPageModel {
             sb.append(", ").append(suffix);
         }
 
-        return sb.toString().replace(" ,", ",");
+        return sb.toString().replace(" ,", ",").trim();
     }
 
     public boolean isFatherKnown() {
@@ -88,6 +88,10 @@ public class PersonPageModel {
 
     public boolean hasChildren() {
         return childrenIds != null && childrenIds.size() > 0;
+    }
+
+    public boolean hasSiblings() {
+        return siblingIds != null && siblingIds.size() > 0;
     }
 
     public boolean hasSpouse() {

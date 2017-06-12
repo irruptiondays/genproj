@@ -73,6 +73,12 @@ public class FileService {
 
             bw.write("    <title>" + properlyFormattedName + " | Genealogy Project | irruptiondays</title>");
 
+            bw.write("    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\" />");
+
+            bw.write("    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>");
+
+
+
             bw.newLine();
 
             bw.write("  </head>");
@@ -83,59 +89,87 @@ public class FileService {
 
             bw.newLine();
 
-            bw.write("    <h1>" + properlyFormattedName + "</h1>");
+            bw.write("    <div class=\"container\">");
 
-            //bw.write("<div style=\"display: block\">");
+            bw.newLine();
 
-            bw.write("<div>\n" +
-                    "        <span><strong>Date of Birth:</strong> " + p.getBirthdate() + "</span><br/>\n" +
-                    "        <span><strong>Birthplace:</strong> " + p.getBirthplace() + "</span><br/>\n" +
-                    "    </div>");
+            bw.write("      <h1>" + properlyFormattedName + "</h1>");
+
+            bw.newLine();
+
+            bw.write("      <div>\n" +
+                    "              <span><strong>Date of Birth:</strong> " + Tools.dateString(p.getBirthdate()) + "</span><br/>\n" +
+                    "              <span><strong>Birthplace:</strong> " + p.getBirthplace() + "</span><br/>\n" +
+                    "          </div>");
 
 
             if (p.areParentsKnown()) {
-                bw.write("<div>\n");
+                bw.write("          <div>\n");
                 if (p.isFatherKnown()) {
-                    bw.write("    <span><strong>Father: </strong>" + createPersonLink(personMap.get(p.getFatherId())) + "</span><br/>\n");
+                    bw.write("            <span><strong>Father: </strong>" + createPersonLink(personMap.get(p.getFatherId())) + "</span><br/>\n");
                 }
                 if (p.isMotherKnown()) {
-                    bw.write("    <span><strong>Mother: </strong>" + createPersonLink(personMap.get(p.getMotherId())) + "</span><br/>\n");
+                    bw.write("            <span><strong>Mother: </strong>" + createPersonLink(personMap.get(p.getMotherId())) + "</span><br/>\n");
                 }
-                bw.write("</div>");
+                bw.write("          </div>");
+            }
+
+            bw.newLine();
+
+            if (p.hasSiblings()) {
+
+                bw.write("          <div>\n" +
+                        "                  <span><strong>Siblings: </strong></span>\n" +
+                        "                  <ul style=\"list-style: none;\">\n");
+
+                for (Long id : p.getSiblingIds()) {
+                    bw.write("              <li>" + createPersonLink(personMap.get(id)) + "</li>");
+                }
+
+                bw.write("                  </ul>\n" +
+                        "              </div>");
+
             }
 
             bw.newLine();
 
             if (p.hasChildren()) {
 
-                bw.write("<div>\n" +
-                        "        <span><strong>Children: </strong></span>\n" +
-                        "        <ul style=\"list-style: none;\">\n");
+                bw.write("          <div>\n" +
+                        "            <span><strong>Children: </strong></span>\n" +
+                        "            <ul style=\"list-style: none;\">\n");
 
                 for (Long id : p.getChildrenIds()) {
-                    bw.write("<li>" + createPersonLink(personMap.get(id)) + "</li>");
+                    bw.write("              <li>" + createPersonLink(personMap.get(id)) + "</li>");
                 }
 
-                bw.write("        </ul>\n" +
-                        "    </div>");
+                bw.write("            </ul>\n" +
+                        "              </div>");
 
             }
 
             if (p.hasSpouse()) {
-                bw.write("    <span><strong>Married: </strong>" + createPersonLink(personMap.get(p.getCurrentSpouseId())) + "</span><br/>\n");
+                bw.write("              <span><strong>Married: </strong>" +
+                        createPersonLink(personMap.get(p.getCurrentSpouseId())) +
+                        " (" + Tools.dateString(p.getMarriageAnniversary()) +
+                        ")</span><br/>\n");
             }
 
             if (p.isDead()) {
-                bw.write("<div>\n" +
-                        "        <span><strong>Date of Death:</strong> " + p.getDeathdate() + "</span><br/>\n" +
-                        "    </div>");
+                bw.write("          <div>\n" +
+                        "                  <span><strong>Date of Death:</strong> " + Tools.dateString(p.getDeathdate()) + "</span><br/>\n" +
+                        "              </div>");
             }
 
             if (p.getCurrentOrLateHome() != null && !p.getCurrentOrLateHome().isEmpty()) {
-                bw.write("<div>\n" +
-                        "        <span><strong>Residence:</strong> " + p.getCurrentOrLateHome() + "</span><br/>\n" +
-                        "    </div>");
+                bw.write("          <div>\n" +
+                        "                  <span><strong>Residence:</strong> " + p.getCurrentOrLateHome() + "</span><br/>\n" +
+                        "              </div>");
             }
+
+
+
+            bw.write("  </div>");
 
             bw.write("  </body>");
 
