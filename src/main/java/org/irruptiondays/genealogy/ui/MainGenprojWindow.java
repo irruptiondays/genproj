@@ -1,10 +1,13 @@
 package org.irruptiondays.genealogy.ui;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * Created by tvalentine on 11/5/2018.
@@ -17,6 +20,7 @@ public class MainGenprojWindow extends TabPane {
         setPrefSize(1000, 800);
         setMinSize(TabPane.USE_PREF_SIZE, TabPane.USE_PREF_SIZE);
         setMaxSize(TabPane.USE_PREF_SIZE, TabPane.USE_PREF_SIZE);
+        setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         tabSetup();
     }
 
@@ -26,10 +30,21 @@ public class MainGenprojWindow extends TabPane {
         BorderPane personListPane = new BorderPane();
         personListPane.setPrefSize(990, 790);
         VBox vbox = new VBox();
-        vbox.setPrefSize(980, 780);
-        Label personListHeader = new Label(PERSON_LIST_HEADER);
+        vbox.setMinSize(980, 780);
+        //personListPane.setStyle("-fx-border-color: red;");
+        Label personListHeader = new Label(" " + PERSON_LIST_HEADER);
         personListHeader.setMinWidth(200);
-        vbox.getChildren().addAll(personListHeader);
+
+
+        StringBuffer sb = new StringBuffer("This is text.\n This is some more. \n A third line.");
+        for (int i = 0; i < 4; ++i) {
+            sb.append("" + i + " This is text.\n This is some more. \n A third line.\n\n");
+        }
+        Text text = new Text(sb.toString());
+        ScrollPane scrollPane = new ScrollPane(text);
+        scrollPane.setMinSize(970, 770);
+
+        vbox.getChildren().addAll(personListHeader, scrollPane);
         personListPane.getChildren().addAll(vbox);
         personList.setContent(personListPane);
         this.getTabs().addAll(personList);
