@@ -2,6 +2,7 @@ package org.irruptiondays.genealogy.ui;
 
 import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by tvalentine on 11/5/2018.

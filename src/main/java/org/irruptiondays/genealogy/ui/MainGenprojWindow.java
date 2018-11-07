@@ -8,6 +8,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by tvalentine on 11/5/2018.
@@ -48,7 +49,10 @@ public class MainGenprojWindow extends TabPane {
         personListPane.getChildren().addAll(vbox);
         personList.setContent(personListPane);
         this.getTabs().addAll(personList);
+
+        System.out.println("\n\n\n\n\n size is " + ApplicationContextUtils.getPersonController().getAllPersons().size());
     }
+
 
 
 }
