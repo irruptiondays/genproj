@@ -8,7 +8,10 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.irruptiondays.genealogy.domain.Person;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created by tvalentine on 11/5/2018.
@@ -37,9 +40,15 @@ public class MainGenprojWindow extends TabPane {
         personListHeader.setMinWidth(200);
 
 
-        StringBuffer sb = new StringBuffer("This is text.\n This is some more. \n A third line.");
-        for (int i = 0; i < 4; ++i) {
-            sb.append("" + i + " This is text.\n This is some more. \n A third line.\n\n");
+        StringBuffer sb = new StringBuffer("");
+
+        List<Person> persons = ApplicationContextUtils.getPersonController().getAllPersons();
+
+        if (persons != null) {
+            for (Person p : persons) {
+                //sb.append("" + i + " This is text.\n This is some more. \n A third line.\n\n");
+                sb.append(p.getPrintedName()).append("\n");
+            }
         }
         Text text = new Text(sb.toString());
         ScrollPane scrollPane = new ScrollPane(text);
