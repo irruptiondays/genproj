@@ -1,6 +1,5 @@
 package org.irruptiondays.genealogy.ui;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -9,7 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.irruptiondays.genealogy.domain.Person;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -58,8 +56,6 @@ public class MainGenprojWindow extends TabPane {
         personListPane.getChildren().addAll(vbox);
         personList.setContent(personListPane);
         this.getTabs().addAll(personList);
-
-        System.out.println("\n\n\n\n\n size is " + ApplicationContextUtils.getPersonController().getAllPersons().size());
     }
 
 
